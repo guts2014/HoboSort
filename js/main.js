@@ -21,7 +21,6 @@ function addCustomers()
     customer.sprite  = game.scene.Sprite(customerImage(customer.randT, customer.randM), game.layer);
     customer.sprite.move(game.positions[customer.randT], -imageWidth);
     customer.sprite.size(imageWidth, imageWidth);
-    customer.sprite.scale(1);
     var speedBonus = [1,1.5,1.5]
     customer.sprite.yv = 3 * game.player.level * speedBonus[customer.randM];
     customer.sprite.update();
@@ -39,7 +38,6 @@ function customerImage(cType, cMood)
 }
 
 function initBuckets(){
-    game.bucketLayer = game.scene.Layer("buckets");
     game.buckets = [];    
 
     for(var i = 0; i < 4; i++){
@@ -69,20 +67,30 @@ $(document).ready(function ()
     game.customerSprites = sjs.List();
     game.tickCounter = 0;
     game.ticker = game.scene.Ticker(draw);
-    game.satisfaction = 10;
+    game.satisfaction = 100;
+    game.buttons = sjs.List();
     propagateSatisfaction();
 
     initBuckets();
+    initButton();
 
     game.ticker.run();
 });
 
-function paintOff()
-{
-    button = game.scene.Sprite(customerImage(customer.randT, customer.randM), game.layer);
-            move(game.positions[customer.randT], -imageWidth);
-            size(imageWidth, imageWidth);
-    button.scale(1);   
+function initButton()
+{  
+    game.buttonLayer = game.scene.Layer("buttons");
+    buttonLabels = ["A","S","D","F"];
+
+    for(var s in buttonLabels)
+    {
+        button  = game.scene.Sprite("img/btn-"+buttonLabels[s]+".png", game.buttonLayer);
+        button.move(game.positions[s], 500);
+        button.size(imageWidth, imageWidth);
+        button.update();
+        game.buttons.add(button);
+    }
+
 }
 
 function loseGame()
