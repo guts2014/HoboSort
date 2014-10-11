@@ -20,6 +20,7 @@ header img{
 
 .icon{
 	position: relative;
+	padding-bottom: 20px
 }
 
 .icon .icon-notification{
@@ -48,15 +49,15 @@ header img{
 .employee-container .employee-count{
 	background: #fff;
 	border: 2px solid #000;
-	width: 50px;
-	height: 50px;
+	width: 40px;
+	height: 40px;
 	position: absolute;
 	top: -2px;
 	left: 27px;
-	border-radius: 25px;
-	line-height: 50px;
+	border-radius: 20px;
+	line-height: 38px;
 	text-align: center;
-	font-size: 20px;
+	font-size: 17px;
 	font-weight: bold;
 
 }
@@ -70,9 +71,11 @@ header img{
 
 .employee-container .employee-description{
 	padding-bottom: 40px;
+	font-size: 12px;
+	right: 20px;
 }
 
 .employee-container .employee-icon img{
-	width: 120px;
+	width: 90px;
 	top: 2px;
-}
+	}
