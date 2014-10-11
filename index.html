@@ -11,8 +11,9 @@
         <script src="js/jquery.js"></script>
         <script src="js/angular.js"></script>
         <script src = "js/sprite.js"></script>
-        <script src="js/app.js"></script>
+        <script src="js/player_bucket_employee.js"></script>
         <script src="js/main.js"></script>
+        <script src="js/app.js"></script>
     </head>
     <body ng-app="hoboApp" ng-controller="gameController">
         <div class="container">
@@ -28,8 +29,8 @@
                         </div>
                     </div>
                     <div class="col-md-4">
-                        <div id="level">Level 100</div>
-                        <div id="money">$10000000</div>
+                        <div id="level">Level {{player.level}}</div>
+                        <div id="money">${{player.cash}}</div>
                     </div>
 
                 </div>
@@ -40,11 +41,11 @@
                 <div class="col-md-4">
                     <div class="employee-container row" ng-repeat="employee in employees">
                         <div class="employee-icon col-xs-4">
-                            <img ng-src="{{employee.src}}"/>
+                            <img ng-src="{{employee.img}}"/>
                         </div>
                         <div class="employee-description col-xs-8">
                             <h3>{{employee.name}}</h3>
-                            <p>{{employee.description}}</p>
+                            <p>{{employee.desc}}</p>
                         </div>
                         <a class="employee-price btn btn-primary">Buy for: ${{employee.price}}</a>
                         <div class="employee-count">{{employee.count}}</div>

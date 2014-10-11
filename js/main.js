@@ -38,6 +38,7 @@ $(document).ready(function ()
     game.size = {width: $container.innerWidth(), height: $container.innerWidth()*3/4};
     game.scene = sjs.Scene({w: game.size.width, h: game.size.height, parent: $container[0]});
     game.layer = game.scene.Layer("front");
+    game.bucketLayer = game.scene.Layer("buckets")
     game.input = game.scene.Input();
     game.customers = sjs.List();
     game.tickCounter = 0;
