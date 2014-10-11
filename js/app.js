@@ -8,7 +8,7 @@ hoboApp.controller('gameController', function($scope){
 			'Napoleon Bonerfarte',
 			'Good at breaking bones. And phones.',
 			0,
-			1000,
+			1000*1.5,
 			0,
 			"img/employee1.png"
 		),
@@ -24,7 +24,7 @@ hoboApp.controller('gameController', function($scope){
 			'Kazimir Waffles', 
 			'Bird brain.',
 			3,
-			1000,
+			1000*0.8,
 			0,
 			"img/employee2.png"
 		),
@@ -32,7 +32,7 @@ hoboApp.controller('gameController', function($scope){
 			'Nigel Nybbles', 
 			'Good old-fashioned postage.',
 			1,
-			1000,
+			1000*1.2,
 			0,
 			"img/employee4.png"
 		)

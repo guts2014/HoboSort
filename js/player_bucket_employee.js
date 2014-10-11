@@ -16,8 +16,16 @@ Employee.prototype.addCount = function(){
 	this.count = this.count + 1;
 	this.bucket.appearAt = new Date();
 }
-Employee.prototype.addDegree = function(){this.degree = this.degree + 1;}
-Employee.prototype.increasePrice = function(){this.price = this.price + 100;}
+Employee.prototype.addDegree = function(){this.degree = this.degree + 1;};
+
+Employee.prototype.increasePrice = function(){
+	var increase = 100;
+	if (this.type == 0) {increase *= 1.5;}
+	else if (this.type == 1) {increase *= 1.2;}
+	else if (this.type == 3) {increase *= 0.8;};
+	this.price = this.price + increase;
+}
+
 
 
 function Bucket(employee) {

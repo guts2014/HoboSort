@@ -16,9 +16,16 @@ function Customer(level)
         this.randM = 2;
     };  //Any mood from 0-2
 
-	this.randVal = 100 * level; //Any cash value from 5-level
+	this.cash = 100 * level; //Any cash value from 5-level
     if(this.randM === 1){
-        this.randVal *= 5;
+        this.cash *= 5;
+    }
+    if(this.randT == 0) {
+        this.cash *= 1.5;
+    } else if(this.randT == 1) {
+        this.cash *= 1.2;
+    } else if(this.randT == 3) {
+        this.cash *= 0.8;
     }
 }
 
@@ -34,7 +41,7 @@ function addCustomer()
     customer.sprite.update();
 
     var reputation = customer.randM == 2 ? 3 : 1;
-    game.values[customer.sprite.id] = {cash: customer.randVal, rep: reputation};
+    game.values[customer.sprite.id] = {cash: customer.cash, rep: reputation};
 
     game.wave.push(customer);
     game.customerNumbers[customer.randT]++;
@@ -100,6 +107,9 @@ $(document).ready(function ()
     game.ticker = game.scene.Ticker(draw);
     game.satisfaction = 50;
     game.buttons = sjs.List();
+    var time = (new Date().getTime());
+    game.buttonTimes = [time, time, time, time];
+    game.buttonStates = [1,1,1,1] //OFF
     propagateSatisfaction();
 
     initBuckets();
@@ -140,17 +150,27 @@ function loseGame()
 
 function buttonCheck(character, index)
 {
-    if(game.input.keyboard[character])
+    if(game.input.keyPressed(character) && game.buttonStates[index] == 1)
     {
+        //game.buttonTimes[index] = (new Date().getTime());
         game.buttons.list[index].setYOffset(imageWidth);
         game.buttons.list[index].update();
         checkPresence(index);
+
+        game.buttonStates[index] = 0;
+
+        setTimeout(function()
+        {
+            game.buttonStates[index] = 1;
+            game.buttons.list[index].setYOffset(0);
+            game.buttons.list[index].update();
+        },200)
     }
-    else
+    /*else
     {
         game.buttons.list[index].setYOffset(0);
         game.buttons.list[index].update();
-    }
+    }*/
 }
 
 function addSatisfaction(){
@@ -180,15 +200,17 @@ function draw()
             delete game.values[customer.id];
 
             propagateSatisfaction();
-
-            if(game.satisfaction < 0.5){
-                game.satisfaction = 0;
-                loseGame();
-            }
         }
     }
 
-    game.tickCounter++;
+    if(game.satisfaction < 0.5)
+    {
+        game.satisfaction = 0;
+        propagateSatisfaction();
+        loseGame();
+    }
+
+    
     if (game.tickCounter % Math.round(50/game.player.level) == 0 && game.nextWaveAt && (new Date()).getTime() > game.nextWaveAt.getTime()) 
         showCustomer();
     if (game.nextWaveAt && (new Date()).getTime() < game.nextWaveAt.getTime()){
@@ -203,7 +225,7 @@ function draw()
         if(bucket.visible){
             for(var j in game.customerSprites.list){
                 var customer = game.customerSprites.list[j];
-                if(bucket.sprite.y - customer.y <= 32 && bucket.sprite.y - customer.y > -64 && Math.abs(bucket.sprite.x - customer.x) < 1){
+                if(bucket.sprite.y - customer.y <= imageWidth * (1/2) && bucket.sprite.y - customer.y > -1 * imageWidth && Math.abs(bucket.sprite.x - customer.x) < 1){
                     bucket.disappear();
                     bucket.sprite.update();
 
@@ -225,23 +247,36 @@ function draw()
             }    
         }
     }
+
+    //checkButtonCheat();
+
+    game.tickCounter++;
+
 }
 function checkPresence(index)
 {
     var button = game.buttons.list[index];
+    var presence = false;
     while(customer = game.customerSprites.iterate())
     {
-        if(button.y - customer.y <= 0 && button.y - customer.y > -64 && Math.abs(button.x - customer.x) < 1)
+        if(button.y - customer.y <= imageWidth * (3/4) && button.y - customer.y > -(imageWidth * (3/4)) && Math.abs(button.x - customer.x) < 1)
         {
             addSatisfaction();
             game.player.addCash(game.values[customer.id].cash);
             propagateSatisfaction();
             propagateCash();
+            presence = true;
             
             game.customerSprites.remove(customer);
             customer.remove();         
             delete game.values[customer.id];
         }
+    }
+
+    if(!presence)
+    {
+        game.satisfaction--;
+        propagateSatisfaction();
     }
 }
 
