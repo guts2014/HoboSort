@@ -6,7 +6,7 @@ hoboApp.controller('gameController', function($scope){
 		new Employee(
 			'Napoleon Bonerfarte',
 			'Good at breaking bones. And phones.',
-			"phone",
+			0,
 			1000,
 			0,
 			"img/employee1.png"
@@ -14,7 +14,7 @@ hoboApp.controller('gameController', function($scope){
 		new Employee(
 			'Durria Bananachin', 
 			'The Facebook addict.',
-			"mail",
+			2,
 			1000,
 			0,
 			"img/employee3.png"
@@ -22,7 +22,7 @@ hoboApp.controller('gameController', function($scope){
 		new Employee(
 			'Kazimir Waffles', 
 			'Bird brain.',
-			"facebook",
+			3,
 			1000,
 			0,
 			"img/employee2.png"
@@ -30,7 +30,7 @@ hoboApp.controller('gameController', function($scope){
 		new Employee(
 			'Nigel Nybbles', 
 			'Good old-fashioned postage.',
-			"twit",
+			1,
 			1000,
 			0,
 			"img/employee4.png"

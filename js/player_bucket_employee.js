@@ -12,25 +12,36 @@ function Employee(name, desc, type, price, count, img) {
 	this.desc = desc;
 }
 
-Employee.prototype.addCount = function(){this.count = this.count + 1;}
+Employee.prototype.addCount = function(){
+	this.count = this.count + 1;
+	this.bucket.appearAt = new Date();
+}
 Employee.prototype.addDegree = function(){this.degree = this.degree + 1;}
 Employee.prototype.increasePrice = function(){this.price = this.price + 100;}
 
 
 function Bucket(employee) {
-	this.on = false;
 	this.employee = employee;
+	this.employee.bucket = this;
 }
 
 Bucket.prototype.disappear = function(){
-	this.on = false;
-	var interval = -this.employee.count/10 + 10;
-	this.appearAt = new Time();
-	this.appearAt.setTime((new Time()).getTime() + (interval*1000));
+	this.sprite.setOpacity(0);
+	this.visible = false;
+	if(this.employee.count > 0){
+		var interval = -this.employee.count/10 + 10;
+		this.appearAt = new Date();
+		this.appearAt.setTime((new Date()).getTime() + (interval*1000));	
+	}
 }
 
 Bucket.prototype.appear = function() {
-	this.on = true;
+	this.sprite.setOpacity(1);
+	this.visible = true;
+}
+
+Bucket.prototype.shouldAppear = function() {
+	return this.appearAt && this.appearAt.getTime() < (new Date()).getTime();
 }
 
 
