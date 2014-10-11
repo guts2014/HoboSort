@@ -27,23 +27,32 @@ $(document).ready(function ()
     enemy.update();
 });
 
-function paintCustomer(targetY, Customer)
-{
-	var canvas = document.getElementById("canvas");
-	canvas.addEventListener("keydown",doKeyDown,true);
-    input.keyPressed("A");
-
-}
-
 function draw()
 {
     /*
 	if(game.input.keyboard.right)
         console.log("YoMomma");
     */
+
     if(game.input.keyPressed("a"))
         console.log("A");
+    if(game.input.keyPressed("s"))
+        console.log("S");
+    if(game.input.keyPressed("d"))
+        console.log("D");
+    if(game.input.keyPressed("f"))
+        console.log("F");
 }
+
+/*
+function paintCustomer(targetY, Customer)
+{
+    var canvas = document.getElementById("canvas");
+    canvas.addEventListener("keydown",doKeyDown,true);
+    input.keyPressed("A");
+
+}
+*/
 
 
 /*
