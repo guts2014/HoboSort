@@ -80,12 +80,13 @@ hoboApp.controller('gameController', function($scope){
 	}
 	$scope.startGame=function(){
 		$("#dialogue-box").fadeOut();
+		game.running=true;
 		game.ticker.run();
 		initWave();
 	}
 
 	$scope.displayWaveTimer = function() {
-		return game.nextWaveAt && (new Date()).getTime() < game.nextWaveAt.getTime();
+		return game.nextWaveAt && (new Date()).getTime() < game.nextWaveAt.getTime() && game.running;
 	}
 
 	$scope.waveTimer = 0; 
