@@ -11,7 +11,7 @@ function Customer(level, employees)
 function addCustomers()
 {
     //console.log("Adding customer");
-    var averageEmployee = game
+    var averageEmployee = (game.employees[0].count + game.employees[1].count + game.employees[2].count + game.employees[3].count)/4 + 1; //Crappy average calculation
     var customer = new Customer(game.player.level,1);
     customer.sprite  = game.scene.Sprite(customerImage(customer.randT, customer.randM), game.layer);
     var imageWidth = 64;
@@ -65,6 +65,7 @@ $(document).ready(function ()
     game.tickCounter = 0;
     game.ticker = game.scene.Ticker(draw);
     game.satisfaction = 50;
+    propagateSatisfaction();
 
     initBuckets();
 
@@ -76,6 +77,11 @@ $(document).ready(function ()
 function paintKeys()
 {
 
+
+}
+
+function loseGame()
+{
 
 }
 
@@ -96,12 +102,16 @@ function draw()
         //console.log(game.customers.list.length);
         customer.applyVelocity();
         customer.update();
-        
+
         if(customer.y > (game.size.height))
         {
             game.customers.remove(customer);
             customer.remove();
             game.satisfaction -= 1;
+            propagateSatisfaction();
+
+            if(game.satisfaction < 0.5)
+                loseGame();
         }
         
             
@@ -112,6 +122,11 @@ function draw()
         {
             addCustomers();
         }
+}
+
+function propagateSatisfaction()
+{
+    game.ngScope.$apply(function(){game.ngScope.satisfaction = game.satisfaction;});
 }
 
 /*

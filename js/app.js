@@ -40,6 +40,8 @@ hoboApp.controller('gameController', function($scope){
 	$scope.player = new Player(1,10000);
 	game.player = $scope.player;
 	game.employees = $scope.employees;
+	game.ngScope = $scope;
+	$scope.satisfaction = 50;
 
 	$scope.icons=[
 		{
