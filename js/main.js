@@ -1,5 +1,6 @@
 
 game = {};
+sprites = {};
 
 function Customer(level, employees)
 {
@@ -76,13 +77,12 @@ $(document).ready(function ()
 
 function paintKeys()
 {
-
-
+    var buttonPo
 }
 
 function loseGame()
 {
-
+    document.getElementById('nooo').play();
 }
 
 function draw()
@@ -118,7 +118,7 @@ function draw()
     }
 
     game.tickCounter++;
-    if (game.tickCounter % 50 == 0) 
+    if (game.tickCounter % 10 == 0) 
         {
             addCustomers();
         }
@@ -128,52 +128,3 @@ function propagateSatisfaction()
 {
     game.ngScope.$apply(function(){game.ngScope.satisfaction = game.satisfaction;});
 }
-
-/*
-function paintCustomer(targetY, Customer)
-{
-    var canvas = document.getElementById("canvas");
-    canvas.addEventListener("keydown",doKeyDown,true);
-    input.keyPressed("A");
-
-}
-*/
-
-
-/*
-var ctx = document.getElementById("canvas").getContext("2d"),
-    x = 10,
-    y = 0,
-    targetY = 300,
-    velX = 0,
-    velY = 10,
-    thrust = 5;
-
-
-function draw(){   
-    var 
-        ty = targetY - y,
-
-    velY = (ty/dist)*thrust;
-
-    // stop the box if its too close so it doesn't just rotate and bounce
-
-    ctx.fillStyle = "#fff";
-    ctx.clearRect(0,0,400,400);
-    ctx.beginPath();
-    ctx.rect(x, y, 10, 10);
-    ctx.closePath();
-    ctx.fill();
-
-    ctx.fillStyle = "#ff0";
-    ctx.beginPath();
-    ctx.rect(targetX, targetY, 10, 10);
-    ctx.closePath();
-    ctx.fill();
-
-    setTimeout(function(){draw()}, 30);   
-}
-
-draw();
-
-*/
