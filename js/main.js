@@ -183,6 +183,7 @@ function draw()
 
             if(game.satisfaction < 0.5){
                 game.satisfaction = 0;
+                propagateSatisfaction();
                 loseGame();
             }
         }
