@@ -7,7 +7,16 @@ sprites = {};
 function Customer(level)
 {
 	this.randT = Math.floor(Math.random() * 4); //Any type from 0-3
-    this.randM = Math.floor(Math.random() * 3); //Any mood from 0-2
+
+    randif = Math.floor(Math.random() * 20);
+    if (randif < 14) {
+        this.randM = 0;
+    } else if (randif < 17) {
+        this.randM = 1;
+    } else {
+        this.randM = 2;
+    };  //Any mood from 0-2
+
 	this.randVal = 100 * level; //Any cash value from 5-level
     if(this.randM === 1){
         this.randVal *= 5;
@@ -22,11 +31,12 @@ function addCustomers()
     customer.sprite.move(game.positions[customer.randT], -imageWidth);
     customer.sprite.size(imageWidth, imageWidth);
     customer.sprite.scale(1);
-    var speedBonus = [1,1.5,1.5]
+    var speedBonus = [1,1.4,1.7]
     customer.sprite.yv = 3 * game.player.level * speedBonus[customer.randM];
     customer.sprite.update();
 
-    game.values[customer.sprite.id] = customer.randVal;
+    var reputation = customer.randM == 2 ? 3 : 1;
+    game.values[customer.sprite.id] = {cash: customer.randVal, rep: reputation};
 
     game.customerSprites.add(customer.sprite);
     //game.customers.push(customer);
@@ -109,8 +119,9 @@ function draw()
         {
             game.customerSprites.remove(customer);
             customer.remove();
+            game.satisfaction -= game.values[customer.id].rep;
             delete game.values[customer.id];
-            game.satisfaction -= 1;
+
             propagateSatisfaction();
 
             if(game.satisfaction < 0.5)
@@ -133,7 +144,7 @@ function draw()
                     bucket.sprite.update();
 
                     game.satisfaction++;
-                    game.player.addCash(game.values[customer.id]);
+                    game.player.addCash(game.values[customer.id].cash);
                     propagateSatisfaction();
                     propagateCash();
                     
