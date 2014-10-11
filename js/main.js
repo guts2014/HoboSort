@@ -37,8 +37,12 @@ function paintCustomer(targetY, Customer)
 
 function draw()
 {
+    /*
 	if(game.input.keyboard.right)
         console.log("YoMomma");
+    */
+    if(game.input.keyPressed("a"))
+        console.log("A");
 }
 
 
