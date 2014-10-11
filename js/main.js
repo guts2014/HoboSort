@@ -8,12 +8,11 @@ function Customer(level, employees)
 	this.randVal = Math.floor(Math.random() + 5) * level * employees; //Any cash value from 5-level
 }
 
-function addCustomers(levels, employees)
+function addCustomers()
 {
-    var level = 1; //REMOVE 
     //console.log("Adding customer");
-    var customer = new Customer(level,1);
-    //var types = ["email","facebook","twitter","phone"];
+    var averageEmployee = game
+    var customer = new Customer(game.player.level,1);
     customer.sprite  = game.scene.Sprite(customerImage(customer.randT, customer.randM), game.layer);
     var imageWidth = 64;
     var bufferOffset = 15;
@@ -24,7 +23,7 @@ function addCustomers(levels, employees)
     customer.sprite.size(64, 64);
     customer.sprite.scale(1);
     var speedBonus = [1,1.5,1.5]
-    customer.sprite.yv = 3 * level * speedBonus[customer.randM];
+    customer.sprite.yv = 3 * game.player.level * speedBonus[customer.randM];
     customer.sprite.update();
 
     game.customers.add(customer.sprite);
@@ -53,28 +52,17 @@ $(document).ready(function ()
 
     game.ticker.run();
     
-    /*player = game.scene.Sprite("img/twitter.png");
-    player.setX(200);
-    player.setY(200);
-    player.canvasUpdate(game.layer);
-    player.applyYVelocity();*/
-    /*
-    var enemy = game.scene.Sprite('img/employee1.png', game.layer);
-    enemy.move(game.size.width / 2 - 150, game.size.height / 2 - 150);
-    enemy.size(300, 300);
-    enemy.scale(0.25);
-    enemy.update();
-    */
+
 });
 
+function paintKeys()
+{
+
+
+}
 
 function draw()
 {
-    /*
-	if(game.input.keyboard.right)
-        console.log("YoMomma");
-    */
-
     if(game.input.keyPressed("a"))
         console.log("A");
     if(game.input.keyPressed("s"))
