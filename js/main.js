@@ -22,6 +22,7 @@ function addCustomers(level, employees)
 
     game.customers.add(customerSprite);
 }
+
 function customerImage(customertype)
 {
     var image;
