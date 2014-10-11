@@ -35,6 +35,23 @@ function customerImage(cType, cMood)
     return "img/"+customerType[cType]+"-"+customerMood[cMood]+".png";
 }
 
+function initBuckets(){
+    game.bucketLayer = game.scene.Layer("buckets");
+    var bucket = new Bucket(game.employees[0]);
+
+    bucket.sprite  = game.scene.Sprite("img/bucket.png",game.bucketLayer);
+    var imageWidth = 64;
+    var bufferOffset = 15;
+    var gap = game.size.width/8;
+    var positions = [gap-(imageWidth/2) - bufferOffset, gap*3-(imageWidth/2) - bufferOffset, gap*5-(imageWidth/2) - bufferOffset, gap*7-(imageWidth/2) - bufferOffset]; //gap,(imageWidth + 3 * gap),(imageWidth * 2 + 5 * gap),(imageWidth * 3 + 7 * gap)
+    bucket.sprite.move(positions[0], 50);
+    bucket.sprite.size(64, 64);
+    bucket.sprite.update();
+
+    game.buckets = [
+        bucket
+    ];
+}
 
 $(document).ready(function () 
 {
@@ -42,13 +59,15 @@ $(document).ready(function ()
     game.size = {width: $container.innerWidth(), height: $container.innerWidth()};
     game.scene = sjs.Scene({w: game.size.width, h: game.size.height, parent: $container[0]});
     game.layer = game.scene.Layer("front");
-    game.bucketLayer = game.scene.Layer("buckets")
+    
     game.input = game.scene.Input();
     game.customers = sjs.List();
     game.tickCounter = 0;
     game.ticker = game.scene.Ticker(draw);
     game.satisfaction = 50;
     propagateSatisfaction();
+
+    initBuckets();
 
     game.ticker.run();
     
