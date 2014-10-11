@@ -31,4 +31,20 @@ hoboApp.controller('gameController', function($scope){
 			src: "img/employee4.png"
 		}
 	];
+
+	$scope.icons=[
+		{
+			src: "img/phone.png"
+		},
+		{
+			src: "img/mail.png"
+		},
+		{
+			src: "img/facebook.png"
+		},
+		{
+			src: "img/twit.png"
+		}
+
+	]
 });

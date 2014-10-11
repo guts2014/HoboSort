@@ -18,26 +18,25 @@ header img{
 	font-weight: bold;
 }
 
-.icon-container{
+.icon{
 	position: relative;
-	padding-bottom: 20px;
 }
 
-.icon-container .icon-notification{
+.icon .icon-notification{
 	background: #fff;
+	color: #fff;
 	border: 2px solid #fff;
 	width: 30px;
 	height: 30px;
 	position: absolute;
 	top: 2px;
 	left: 108px;
-	border-radius: 25px;
+	border-radius: 15px;
 	line-height: 28px;
 	text-align: center;
 	font-size: 15px;
 	font-weight: bold;
 	background: red;
-
 }
 
 .employee-container {
