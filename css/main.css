@@ -32,6 +32,10 @@ header img{
 	font-weight: bold;
 }
 
+#dialogue-box{
+	margin-top: 110px;
+}
+
 .icon{
 	position: relative;
 	padding-bottom: 20px

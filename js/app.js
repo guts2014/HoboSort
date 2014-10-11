@@ -66,4 +66,9 @@ hoboApp.controller('gameController', function($scope){
 		}
 	};
 
+	$scope.startGame=function(){
+		$("#dialogue-box").fadeOut();
+		game.ticker.run();
+	}
+
 });

@@ -73,7 +73,6 @@ $(document).ready(function ()
 
     initBuckets();
 
-    game.ticker.run();
 });
 
 function paintKeys()
