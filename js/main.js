@@ -3,7 +3,6 @@ game = {};
 
 function Customer(level, employees)
 {
-	var types = ["email","facebook","twitter","phone"];
 	this.randT = Math.floor(Math.random() * 3); //Any type from 0-3
 	this.randR = Math.floor(Math.random() + 1 ) * level; //Any rage value from 1-level
 	this.randVal = Math.floor(Math.random() + 5) * level * employees; //Any cash value from 5-level
@@ -12,14 +11,28 @@ function Customer(level, employees)
 function addCustomers(level, employees)
 {
     console.log("Adding customer");
-    var customer = game.scene.Sprite('img/employee1.png', game.layer);
-    customer.move(Math.random() * game.size.width - 150, Math.random() * game.size.height - 150);
-    customer.size(300, 300);
-    customer.scale(0.25);
-    customer.yv = 50;
-    customer.update();
+    var customer = new Customer(1,1);
+    //var types = ["email","facebook","twitter","phone"];
+    var customerSprite = game.scene.Sprite(customerImage(customer.randT), game.layer);
+    customerSprite.move(Math.random() * game.size.width - 150, Math.random() * game.size.height - 150);
+    customerSprite.size(300, 300);
+    customerSprite.scale(0.25);
+    customerSprite.yv = 50;
+    customerSprite.update();
 
-    game.customers.add(customer);
+    game.customers.add(customerSprite);
+}
+function customerImage(customertype)
+{
+    var image;
+    switch(customertype)
+    {
+        case 0: image = "img/employee1.png"; break;
+        case 1: image = "img/employee2.png"; break;
+        case 2: image = "img/employee3.png"; break;
+        case 3: image = "img/employee4.png"; break;
+    }
+    return image
 }
 
 $(document).ready(function () 
