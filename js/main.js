@@ -77,8 +77,11 @@ $(document).ready(function ()
     game.customerSprites = sjs.List();
     game.tickCounter = 0;
     game.ticker = game.scene.Ticker(draw);
-    game.satisfaction = 100;
+    game.satisfaction = 50;
     game.buttons = sjs.List();
+    var time = (new Date().getTime());
+    game.buttonTimes = [time, time, time, time];
+    game.buttons.states = [0,0,0,0] //OFF
     propagateSatisfaction();
 
     initBuckets();
@@ -111,6 +114,11 @@ function buttonCheck(character, index)
 {
     if(game.input.keyboard[character])
     {
+        /*if(game.buttons.states[index] == 0)
+        {
+            game.buttons.states[index] == 1;
+            game.buttonTimes[index] = (new Date().getTime());
+        } */
         game.buttons.list[index].setYOffset(imageWidth);
         game.buttons.list[index].update();
         checkPresence(index);
@@ -121,6 +129,39 @@ function buttonCheck(character, index)
         game.buttons.list[index].update();
     }
 }
+
+/*function checkButtonCheat()
+{
+    for(var i in game.buttons.list)
+    {
+        
+        var time = (new Date().getTime());
+        console.log(time - game.buttonTimes[i]);
+
+        if(time - game.buttonTimes[i] > 400)
+        {
+            game.satisfaction -= 1;
+            propagateSatisfaction();
+            game.buttonTimes[i] = time;
+        }
+        
+    }
+    /*
+    for(var i in game.buttons.list)
+    {
+        
+        var time = (new Date().getTime());
+        console.log(time - game.buttonTimes[i]);
+        if(time - game.buttonTimes[i] > 400)
+        {
+            game.satisfaction -= 1;
+            propagateSatisfaction;
+            game.buttonTimes[i] = time;
+        }
+        
+    }
+    
+}*/
 
 function draw()
 {
@@ -150,7 +191,7 @@ function draw()
         }
     }
 
-    game.tickCounter++;
+    
     if (game.tickCounter % 50 == 0) 
         addCustomers();
 
@@ -160,7 +201,7 @@ function draw()
         if(bucket.visible){
             for(var j in game.customerSprites.list){
                 var customer = game.customerSprites.list[j];
-                if(bucket.sprite.y - customer.y <= 32 && bucket.sprite.y - customer.y > -64 && Math.abs(bucket.sprite.x - customer.x) < 1){
+                if(bucket.sprite.y - customer.y <= imageWidth * (1/2) && bucket.sprite.y - customer.y > -1 * imageWidth && Math.abs(bucket.sprite.x - customer.x) < 1){
                     bucket.disappear();
                     bucket.sprite.update();
 
@@ -181,13 +222,18 @@ function draw()
             }    
         }
     }
+
+    //checkButtonCheat();
+
+    game.tickCounter++;
+
 }
 function checkPresence(index)
 {
     var button = game.buttons.list[index];
     while(customer = game.customerSprites.iterate())
     {
-        if(button.y - customer.y <= 0 && button.y - customer.y > -64 && Math.abs(button.x - customer.x) < 1)
+        if(button.y - customer.y <= imageWidth * (3/4) && button.y - customer.y > -(imageWidth * (3/4)) && Math.abs(button.x - customer.x) < 1)
         {
             game.satisfaction++;
             game.player.addCash(game.values[customer.id].cash);
