@@ -5,14 +5,14 @@ function Customer(level, employees)
 {
 	this.randT = Math.floor(Math.random() * 4); //Any type from 0-3
     this.randM = Math.floor(Math.random() * 3); //Any mood from 0-2
-	this.randR = Math.floor(Math.random() + 1 ) * level; //Any rage value from 1-level
 	this.randVal = Math.floor(Math.random() + 5) * level * employees; //Any cash value from 5-level
 }
 
-function addCustomers(level, employees)
+function addCustomers(levels, employees)
 {
+    var level = 1; //REMOVE 
     //console.log("Adding customer");
-    var customer = new Customer(1,1);
+    var customer = new Customer(level,1);
     //var types = ["email","facebook","twitter","phone"];
     customer.sprite  = game.scene.Sprite(customerImage(customer.randT, customer.randM), game.layer);
     var imageWidth = 64;
@@ -23,7 +23,8 @@ function addCustomers(level, employees)
     customer.sprite.move(positions[customer.randT], -60); //Math.random() * game.size.width - 32
     customer.sprite.size(64, 64);
     customer.sprite.scale(1);
-    customer.sprite.yv = 5;
+    var speedBonus = [1,1.5,1.5]
+    customer.sprite.yv = 3 * level * speedBonus[customer.randM];
     customer.sprite.update();
 
     game.customers.add(customer.sprite);
@@ -48,9 +49,10 @@ $(document).ready(function ()
     game.customers = sjs.List();
     game.tickCounter = 0;
     game.ticker = game.scene.Ticker(draw);
+    game.satisfaction = 50;
 
     game.ticker.run();
-   
+    
     /*player = game.scene.Sprite("img/twitter.png");
     player.setX(200);
     player.setY(200);
@@ -93,6 +95,7 @@ function draw()
         {
             game.customers.remove(customer);
             customer.remove();
+            game.satisfaction -= 1;
         }
         
             

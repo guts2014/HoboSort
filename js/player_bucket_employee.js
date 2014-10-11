@@ -14,7 +14,7 @@ function Employee(name, desc, type, price, count, img) {
 
 Employee.prototype.addCount = function(){this.count = this.count + 1;}
 Employee.prototype.addDegree = function(){this.degree = this.degree + 1;}
-Employee.prototype.increasePriceBy = function(money){this.price = this.price + money;}
+Employee.prototype.increasePrice = function(){this.price = this.price + 100;}
 
 
 function Bucket(employee) {
@@ -41,3 +41,4 @@ function Player(level, cash) {
 
 Player.prototype.levelUp = function(){this.level = this.level + 1;}
 Player.prototype.addCash = function(earn){this.cash = this.cash + earn;}
+Player.prototype.canAfford = function(employee){return employee.price <= this.cash;}
