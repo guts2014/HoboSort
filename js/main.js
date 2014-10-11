@@ -3,6 +3,7 @@ game = {types: ["phone","mail","facebook","twit"], values: {}};
 var imageWidth = 64;
 var bufferOffset = 15;
 
+
 function Customer(level)
 {
 	this.randT = Math.floor(Math.random() * 4); //Any type from 0-3
@@ -68,22 +69,24 @@ $(document).ready(function ()
     game.customerSprites = sjs.List();
     game.tickCounter = 0;
     game.ticker = game.scene.Ticker(draw);
-    game.satisfaction = 50;
+    game.satisfaction = 10;
     propagateSatisfaction();
 
     initBuckets();
 
 });
 
-function paintKeys()
+function paintOff()
 {
-
-
+    button = game.scene.Sprite(customerImage(customer.randT, customer.randM), game.layer);
+            move(game.positions[customer.randT], -imageWidth);
+            size(imageWidth, imageWidth);
+    button.scale(1);   
 }
 
 function loseGame()
 {
-
+    document.getElementById('nooo').play();
 }
 
 function draw()
@@ -109,7 +112,7 @@ function draw()
             game.customerSprites.remove(customer);
             customer.remove();
             delete game.values[customer.id];
-            game.satisfaction -= 1;
+            game.satisfaction--;
             propagateSatisfaction();
 
             if(game.satisfaction < 0.5)
@@ -118,9 +121,8 @@ function draw()
     }
 
     game.tickCounter++;
-    if (game.tickCounter % 50 == 0) {
+    if (game.tickCounter % 50 == 0) 
         addCustomers();
-    }
 
     for(var i in game.buckets){
         var bucket = game.buckets[i];
