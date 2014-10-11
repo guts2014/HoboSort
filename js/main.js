@@ -143,6 +143,12 @@ function buttonCheck(character, index)
     }
 }
 
+function addSatisfaction(){
+    if (game.satisfaction+1 <= 100) {
+        game.satisfaction++;
+    }
+}
+
 function draw()
 {
     buttonCheck("a",0);
@@ -189,9 +195,10 @@ function draw()
                     bucket.disappear();
                     bucket.sprite.update();
 
-                    game.satisfaction++;
-                    game.player.addCash(game.values[customer.id].cash);
+                    addSatisfaction();
                     propagateSatisfaction();
+                    game.player.addCash(game.values[customer.id].cash);
+                    
                     propagateCash();
                     
                     game.customerSprites.remove(customer);
@@ -214,7 +221,7 @@ function checkPresence(index)
     {
         if(button.y - customer.y <= 0 && button.y - customer.y > -64 && Math.abs(button.x - customer.x) < 1)
         {
-            game.satisfaction++;
+            addSatisfaction();
             game.player.addCash(game.values[customer.id].cash);
             propagateSatisfaction();
             propagateCash();
