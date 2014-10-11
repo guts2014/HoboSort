@@ -15,6 +15,20 @@ hoboApp.controller('gameController', function($scope){
 			price: 100000,
 			count: 50,
 			src: "img/employee3.png"
+		},
+		{
+			name:'Kazimir Waffles', 
+			description: 'Bird brain.',
+			price: 100000,
+			count: 2,
+			src: "img/employee2.png"
+		},
+		{
+			name:'Nigel Nybbles', 
+			description: 'Good old-fashioned postage.',
+			price: 19889,
+			count: 50,
+			src: "img/employee4.png"
 		}
 	];
 });
