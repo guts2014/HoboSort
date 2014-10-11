@@ -47,7 +47,7 @@
                             <h4>{{employee.name}}</h4>
                             <p>{{employee.desc}}</p>
                         </div>
-                        <a class="employee-price btn btn-primary">Buy for: ${{employee.price}}</a>
+                        <a class="employee-price btn btn-primary" ng-click="buyEmployee(employee)">Buy for: ${{employee.price}}</a>
                         <div class="employee-count">{{employee.count}}</div>
                     </div>
                 </div>

@@ -52,7 +52,7 @@ $(document).ready(function ()
     game.satisfaction = 50;
 
     game.ticker.run();
-   
+    
     /*player = game.scene.Sprite("img/twitter.png");
     player.setX(200);
     player.setY(200);
