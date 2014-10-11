@@ -2,7 +2,7 @@
 game = {types: ["phone","mail","facebook","twit"], values: {}};
 var imageWidth = 64;
 var bufferOffset = 15;
-sprites = {};
+
 
 function Customer(level)
 {
@@ -69,7 +69,7 @@ $(document).ready(function ()
     game.customerSprites = sjs.List();
     game.tickCounter = 0;
     game.ticker = game.scene.Ticker(draw);
-    game.satisfaction = 50;
+    game.satisfaction = 10;
     propagateSatisfaction();
 
     initBuckets();
@@ -77,9 +77,12 @@ $(document).ready(function ()
     game.ticker.run();
 });
 
-function paintKeys()
+function paintOff()
 {
-    var buttonPo
+    button = game.scene.Sprite(customerImage(customer.randT, customer.randM), game.layer);
+            move(game.positions[customer.randT], -imageWidth);
+            size(imageWidth, imageWidth);
+    button.scale(1);   
 }
 
 function loseGame()
@@ -110,7 +113,7 @@ function draw()
             game.customerSprites.remove(customer);
             customer.remove();
             delete game.values[customer.id];
-            game.satisfaction -= 1;
+            game.satisfaction--;
             propagateSatisfaction();
 
             if(game.satisfaction < 0.5)

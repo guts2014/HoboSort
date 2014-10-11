@@ -14,7 +14,7 @@
         <script src="js/player_bucket_employee.js"></script>
         <script src="js/main.js"></script>
         <script src="js/app.js"></script>
-        <audio id "nooo" src ="sound/nooo.mp3" preload="auto"></audio>
+        <audio id="nooo" src ="sound/nooo.mp3" preload="auto"></audio>
     </head>
     <body ng-app="hoboApp" ng-controller="gameController">
         <div class="container">
@@ -34,7 +34,7 @@
                             <div id="money">${{player.cash}}</div>
                         </div>
                         <div class= "col-md-4">
-                            <div id="percentage">{{satisfaction}}%</div>
+                            <div id="percentage" ng-class="getSatisfcationClass()">{{satisfaction}}%</div>
                             <div id="reputation">Reputation</div
                         </div>
                         

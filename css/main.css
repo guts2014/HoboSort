@@ -27,6 +27,24 @@ header img{
 	font-weight: bold;
 }
 
+#percentage.is-orange
+{
+	color:#FF6600;
+}
+
+#percentage.is-light-orange
+{
+	color:#FF9900;
+}
+#percentage.is-red
+{
+	color:red;
+}
+#percentage.is-green
+{
+	color:green;
+}
+
 #reputation{
 	font-size: 20px;
 	font-weight: bold;
