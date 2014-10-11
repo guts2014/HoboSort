@@ -190,7 +190,7 @@ function checkPresence(index)
         if(button.y - customer.y <= 0 && button.y - customer.y > -64 && Math.abs(button.x - customer.x) < 1)
         {
             game.satisfaction++;
-            game.player.addCash(game.values[customer.id]);
+            game.player.addCash(game.values[customer.id].cash);
             propagateSatisfaction();
             propagateCash();
             
