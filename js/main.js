@@ -1,31 +1,45 @@
 
 game = {};
 
-function generateCustomer(level, employees)
+function Customer(level, employees)
 {
 	var types = ["email","facebook","twitter","phone"];
-	var randT = Math.floor(Math.random() * 3); //Any type from 0-3
-	var randR = Math.floor(Math.random() + 1 ) * level; //Any rage value from 1-level
-	var randVal = Math.floor(Math.random() + 5) * level * employees; //Any cash value from 5-level
-	
-	var Customer = {type:types[randT], rage:randR, value:randVal};
+	this.randT = Math.floor(Math.random() * 3); //Any type from 0-3
+	this.randR = Math.floor(Math.random() + 1 ) * level; //Any rage value from 1-level
+	this.randVal = Math.floor(Math.random() + 5) * level * employees; //Any cash value from 5-level
+}
 
-	return Customer;
+function initCustomers(level, employees)
+{
+    game.customers = sjs.List();
+    
 }
 
 $(document).ready(function () 
 {
     game.scene = sjs.Scene({w:640, h:480,parent:$("#canvas-container")[0]});
-    game.layer = game.scene.Layer("Front",{useCanvas:true});
+    game.layer = game.scene.Layer("Front");
     game.ticker = game.scene.Ticker(draw);
     game.input = game.scene.Input();
     game.ticker.run();
+   
+    player = game.scene.Sprite("img/twitter.png");
+    player.setX(200);
+    player.setY(200);
+    player.canvasUpdate(game.layer);
+    player.applyYVelocity();
 
+
+
+    //player.set
+    /*
     var enemy = game.scene.Sprite('img/employee1.png', game.layer);
     enemy.move(200, 200);
     enemy.size(50,50);
     enemy.update();
+    */
 });
+
 
 function draw()
 {
