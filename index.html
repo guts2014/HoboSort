@@ -10,14 +10,54 @@
         <!-- Place favicon.ico and apple-touch-icon(s) in the root directory -->
         <link rel="stylesheet" href="css/bootstrap.min.css">
         <link rel="stylesheet" href="css/main.css">
+        <script src="js/jquery.js"></script>
+        <script src="js/angular.js"></script>
+        <script src="js/app.js"></script>
+        <script src="js/main.js"></script>
     </head>
-    <body>
+    <body ng-app="hoboApp" ng-controller="gameController">
         <div class="container">
             <h1>Team HoboSort</h1>
-            <header>Header</header>
+            <header class="text-center">
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <span class="glyphicon glyphicon-earphone"></span>
+                            </div>
+                            <div class="col-md-3">
+                                <span class="glyphicon glyphicon-envelope"></span>
+                            </div>
+                            <div class="col-md-3">
+                                <span class="glyphicon glyphicon-thumbs-down"></span>
+                            </div>
+                            <div class="col-md-3">
+                                <img src="img/twitter.png"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div id="level">Level 100</div>
+                        <div id="money">$10000000</div>
+                    </div>
+                </div>
+                
+            </header>
             <div class="row">
-                <div class="col-md-8">Bork</div>
-                <div class="col-md-4">Pork</div>
+                <div class="col-md-8"><canvas id="canvas"></canvas></div>
+                <div class="col-md-4">
+                    <div class="employee-container row" ng-repeat="employee in employees">
+                        <div class="employee-icon col-xs-4">
+                            <img ng-src="{{employee.src}}"/>
+                        </div>
+                        <div class="employee-description col-xs-8">
+                            <h3>{{employee.name}}</h3>
+                            <p>{{employee.description}}</p>
+                        </div>
+                        <div class="employee-price">{{employee.price}}</div>
+                        <div class="employee-count">{{employee.count}}</div>
+                    </div>
+                </div>
             </div>  
         </div>    
     </body>
