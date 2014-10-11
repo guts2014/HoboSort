@@ -1,34 +1,41 @@
 var hoboApp = angular.module('hoboApp', []);
 
 hoboApp.controller('gameController', function($scope){
-	$scope.employees=[
-		{
-			name:'Napoleon Bonerfarte', 
-			description: 'Good at breaking bones. And phones.',
-			price: 100000,
-			count: 100,
-			src: "img/employee1.png"
-		},
-		{
-			name:'Durria Bananachin', 
-			description: 'The Facebook addict.',
-			price: 100000,
-			count: 50,
-			src: "img/employee3.png"
-		},
-		{
-			name:'Kazimir Waffles', 
-			description: 'Bird brain.',
-			price: 100000,
-			count: 2,
-			src: "img/employee2.png"
-		},
-		{
-			name:'Nigel Nybbles', 
-			description: 'Good old-fashioned postage.',
-			price: 19889,
-			count: 50,
-			src: "img/employee4.png"
-		}
+	
+	$scope.employees = [
+		new Employee(
+			'Napoleon Bonerfarte',
+			'Good at breaking bones. And phones.',
+			"email",
+			100000,
+			100,
+			"img/employee1.png"
+		),
+		new Employee(
+			'Durria Bananachin', 
+			'The Facebook addict.',
+			"email",
+			100000,
+			50,
+			"img/employee3.png"
+		),
+		new Employee(
+			'Kazimir Waffles', 
+			'Bird brain.',
+			"email",
+			100000,
+			2,
+			"img/employee2.png"
+		),
+		new Employee(
+			'Nigel Nybbles', 
+			'Good old-fashioned postage.',
+			"email",
+			19889,
+			50,
+			"img/employee4.png"
+		)
 	];
+
+	$scope.player = new Player(100,1000000);
 });
