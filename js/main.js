@@ -67,7 +67,7 @@ $(document).ready(function ()
     game.customerSprites = sjs.List();
     game.tickCounter = 0;
     game.ticker = game.scene.Ticker(draw);
-    game.satisfaction = 100;
+    game.satisfaction = 10;
     game.buttons = sjs.List();
     propagateSatisfaction();
 
@@ -93,8 +93,14 @@ function initButton()
 }
 
 function loseGame()
-{
+{   
     document.getElementById('nooo').play();
+    $("#dialogue-box2").fadeIn();
+    for (var i = game.customerSprites.list.length - 1; i >= 0; i--) {
+        game.customerSprites.list[i].remove();
+    };
+    game.ticker.stop();
+
 }
 
 function draw()
