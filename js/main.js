@@ -17,10 +17,13 @@ function initCustomers(level, employees)
 
 $(document).ready(function () 
 {
-    game.scene = sjs.Scene({w:640, h:480,parent:$("#canvas-container")[0]});
-    game.layer = game.scene.Layer("Front");
-    game.ticker = game.scene.Ticker(draw);
+    $container = $("#canvas-container")
+    game.size = {width: $container.innerWidth(), height: $container.innerWidth()*3/4};
+    game.scene = sjs.Scene({w: game.size.width, h: game.size.height, parent: $container[0]});
+    game.layer = game.scene.Layer("front");
     game.input = game.scene.Input();
+    game.ticker = game.scene.Ticker(draw);
+
     game.ticker.run();
    
     player = game.scene.Sprite("img/twitter.png");
@@ -34,8 +37,9 @@ $(document).ready(function ()
     //player.set
     /*
     var enemy = game.scene.Sprite('img/employee1.png', game.layer);
-    enemy.move(200, 200);
-    enemy.size(50,50);
+    enemy.move(game.size.width / 2 - 150, game.size.height / 2 - 150);
+    enemy.size(300, 300);
+    enemy.scale(0.25);
     enemy.update();
     */
 });
