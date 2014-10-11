@@ -1,8 +1,7 @@
+game = {types: ["phone","mail","facebook","twit"], values: {}, wave: [], customerNumbers: [0,0,0,0],running: false};
 
-game = {types: ["phone","mail","facebook","twit"], values: {}};
 var imageWidth = 64;
 var bufferOffset = 15;
-
 
 function Customer(level)
 {
@@ -23,7 +22,7 @@ function Customer(level)
     }
 }
 
-function addCustomers()
+function addCustomer()
 {
     var averageEmployee = (game.employees[0].count + game.employees[1].count + game.employees[2].count + game.employees[3].count)/4 + 1; //Crappy average calculation
     var customer = new Customer(game.player.level,game.employees.length);
@@ -37,14 +36,36 @@ function addCustomers()
     var reputation = customer.randM == 2 ? 3 : 1;
     game.values[customer.sprite.id] = {cash: customer.randVal, rep: reputation};
 
+    game.wave.push(customer);
+    game.customerNumbers[customer.randT]++;
+}
+
+function showCustomer() {
+    var customer = game.wave.pop();
+    game.customerNumbers[customer.randT]--;
     game.customerSprites.add(customer.sprite);
-    //game.customers.push(customer);
+    propagateCustomerNumbers();
+    if(game.wave.length == 0){
+        initWave();
+    }
 }
 
 function customerImage(cType, cMood)
 {
     var customerMood = ["n","m","a"];
     return "img/"+game.types[cType]+"-"+customerMood[cMood]+".png";
+}
+
+function initWave() {
+    game.nextWaveAt = new Date();
+    game.nextWaveAt.setTime(game.nextWaveAt.getTime() + 3000);
+
+    var waveNumbers = [15, 30, 75, 150, 300, 750, 1500, 3000];
+    game.player.level++;
+    for(var i = 0; i < waveNumbers[game.player.level-1]; i++){
+        addCustomer();   
+    }
+    setTimeout(function(){propagateCustomerNumbers();},10);
 }
 
 function initBuckets(){
@@ -106,8 +127,18 @@ function initButton()
 }
 
 function loseGame()
-{
+{   
+    game.running=false;
     document.getElementById('nooo').play();
+    $("#dialogue-box2").fadeIn();
+    for (var i = game.customerSprites.list.length - 1; i >= 0; i--) {
+        game.customerSprites.list[i].remove();
+    };
+    for (var j = 0; j < game.buckets.length; j++) {
+        game.buckets[j].sprite.remove();
+    };
+    game.ticker.stop();
+
 }
 
 function buttonCheck(character, index)
@@ -130,38 +161,11 @@ function buttonCheck(character, index)
     }
 }
 
-/*function checkButtonCheat()
-{
-    for(var i in game.buttons.list)
-    {
-        
-        var time = (new Date().getTime());
-        console.log(time - game.buttonTimes[i]);
-
-        if(time - game.buttonTimes[i] > 400)
-        {
-            game.satisfaction -= 1;
-            propagateSatisfaction();
-            game.buttonTimes[i] = time;
-        }
-        
+function addSatisfaction(){
+    if (game.satisfaction+1 <= 100) {
+        game.satisfaction++;
     }
-    /*
-    for(var i in game.buttons.list)
-    {
-        
-        var time = (new Date().getTime());
-        console.log(time - game.buttonTimes[i]);
-        if(time - game.buttonTimes[i] > 400)
-        {
-            game.satisfaction -= 1;
-            propagateSatisfaction;
-            game.buttonTimes[i] = time;
-        }
-        
-    }
-    
-}*/
+}
 
 function draw()
 {
@@ -173,7 +177,6 @@ function draw()
     var  customer;
     while(customer = game.customerSprites.iterate()) 
     {
-        //console.log(game.customerSprites.list.length);
         customer.applyVelocity();
         customer.update();
 
@@ -186,14 +189,22 @@ function draw()
 
             propagateSatisfaction();
 
-            if(game.satisfaction < 0.5)
+            if(game.satisfaction < 0.5){
+                game.satisfaction = 0;
+                propagateSatisfaction();
                 loseGame();
+            }
         }
     }
 
     
-    if (game.tickCounter % 50 == 0) 
-        addCustomers();
+    if (game.tickCounter % Math.round(50/game.player.level) == 0 && game.nextWaveAt && (new Date()).getTime() > game.nextWaveAt.getTime()) 
+        showCustomer();
+    if (game.nextWaveAt && (new Date()).getTime() < game.nextWaveAt.getTime()){
+        game.ngScope.$apply(function() {
+            game.ngScope.waveTimer = Math.ceil((game.nextWaveAt.getTime() - new Date().getTime())/1000);
+        });
+    }
 
     for(var i in game.buckets){
         var bucket = game.buckets[i];
@@ -205,9 +216,10 @@ function draw()
                     bucket.disappear();
                     bucket.sprite.update();
 
-                    game.satisfaction++;
-                    game.player.addCash(game.values[customer.id].cash);
+                    addSatisfaction();
                     propagateSatisfaction();
+                    game.player.addCash(game.values[customer.id].cash);
+                    
                     propagateCash();
                     
                     game.customerSprites.remove(customer);
@@ -235,7 +247,7 @@ function checkPresence(index)
     {
         if(button.y - customer.y <= imageWidth * (3/4) && button.y - customer.y > -(imageWidth * (3/4)) && Math.abs(button.x - customer.x) < 1)
         {
-            game.satisfaction++;
+            addSatisfaction();
             game.player.addCash(game.values[customer.id].cash);
             propagateSatisfaction();
             propagateCash();
@@ -255,16 +267,6 @@ function propagateCash() {
     game.ngScope.$apply(function(){game.ngScope.player.cash = game.player.cash;});
 }
 
-
-    /*
-    if(game.input.keyboard.a)
-    {
-        game.buttons.list[0].setYOffset(imageWidth);
-        game.buttons.list[0].update();
-    }
-    else
-    {
-        game.buttons.list[0].setYOffset(0);
-        game.buttons.list[0].update();
-    }
-    */
+function propagateCustomerNumbers() {
+    game.ngScope.$apply(function(){game.ngScope.customerNumbers = game.customerNumbers;});
+}
