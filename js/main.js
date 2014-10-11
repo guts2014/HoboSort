@@ -97,16 +97,27 @@ function loseGame()
     document.getElementById('nooo').play();
 }
 
+function buttonCheck(character, index)
+{
+    if(game.input.keyboard[character])
+    {
+        game.buttons.list[index].setYOffset(imageWidth);
+        game.buttons.list[index].update();
+        checkPresence(index);
+    }
+    else
+    {
+        game.buttons.list[index].setYOffset(0);
+        game.buttons.list[index].update();
+    }
+}
+
 function draw()
 {
-    if(game.input.keyPressed("a"))
-        console.log("A");
-    if(game.input.keyPressed("s"))
-        console.log("S");
-    if(game.input.keyPressed("d"))
-        console.log("D");
-    if(game.input.keyPressed("f"))
-        console.log("F");
+    buttonCheck("a",0);
+    buttonCheck("s",1);
+    buttonCheck("d",2);
+    buttonCheck("f",3);
 
     var  customer;
     while(customer = game.customerSprites.iterate()) 
@@ -160,6 +171,24 @@ function draw()
         }
     }
 }
+function checkPresence(index)
+{
+    var button = game.buttons.list[index];
+    while(customer = game.customerSprites.iterate())
+    {
+        if(button.y - customer.y <= 0 && button.y - customer.y > -64 && Math.abs(button.x - customer.x) < 1)
+        {
+            game.satisfaction++;
+            game.player.addCash(game.values[customer.id]);
+            propagateSatisfaction();
+            propagateCash();
+            
+            game.customerSprites.remove(customer);
+            customer.remove();         
+            delete game.values[customer.id];
+        }
+    }
+}
 
 function propagateSatisfaction() {
     game.ngScope.$apply(function(){game.ngScope.satisfaction = game.satisfaction;});
@@ -168,3 +197,17 @@ function propagateSatisfaction() {
 function propagateCash() {
     game.ngScope.$apply(function(){game.ngScope.player.cash = game.player.cash;});
 }
+
+
+    /*
+    if(game.input.keyboard.a)
+    {
+        game.buttons.list[0].setYOffset(imageWidth);
+        game.buttons.list[0].update();
+    }
+    else
+    {
+        game.buttons.list[0].setYOffset(0);
+        game.buttons.list[0].update();
+    }
+    */
