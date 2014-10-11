@@ -1448,43 +1448,43 @@ _Input = function _Input(scene) {
 
         });
 
-    listen("touchend", function (e) {
-        mouseUpEvent(e);
-        that.keyboard = {}
-        that.touchStart = null;
-    });
+        listen("touchend", function (e) {
+            mouseUpEvent(e);
+            that.keyboard = {}
+            that.touchStart = null;
+        });
 
-    listen("touchmove", function (e) {
-        _preventEvent(e); // avoid scrolling the page
-        e = reduceTapEvent(e);
-        updateKeyChange('space', false); // if it moves: it is not a tap
-        mouseMoveEvent(e);
-        if (that.touchStart) {
-            var deltaX = e.clientX - that.touchStart.x;
-            var deltaY = e.clientY - that.touchStart.y;
+        listen("touchmove", function (e) {
+            _preventEvent(e); // avoid scrolling the page
+            e = reduceTapEvent(e);
+            updateKeyChange('space', false); // if it moves: it is not a tap
+            mouseMoveEvent(e);
+            if (that.touchStart) {
+                var deltaX = e.clientX - that.touchStart.x;
+                var deltaY = e.clientY - that.touchStart.y;
 
-            if (deltaY < -that.touchMoveSensibility) {
-                updateKeyChange('up', true);
-                updateKeyChange('down', false);
-            } else if (deltaY > that.touchMoveSensibility) {
-                updateKeyChange('down', true);
-                updateKeyChange('up', false);
-            } else {
-                updateKeyChange('up', false);
-                updateKeyChange('down', false);
+                if (deltaY < -that.touchMoveSensibility) {
+                    updateKeyChange('up', true);
+                    updateKeyChange('down', false);
+                } else if (deltaY > that.touchMoveSensibility) {
+                    updateKeyChange('down', true);
+                    updateKeyChange('up', false);
+                } else {
+                    updateKeyChange('up', false);
+                    updateKeyChange('down', false);
+                }
+                if (deltaX < -that.touchMoveSensibility) {
+                    updateKeyChange('left', true);
+                    updateKeyChange('right', false);
+                } else if(deltaX > that.touchMoveSensibility) {
+                    updateKeyChange('right', true);
+                    updateKeyChange('left', false);
+                } else {
+                    updateKeyChange('left', false);
+                    updateKeyChange('right', false);
+                }
             }
-            if (deltaX < -that.touchMoveSensibility) {
-                updateKeyChange('left', true);
-                updateKeyChange('right', false);
-            } else if(deltaX > that.touchMoveSensibility) {
-                updateKeyChange('right', true);
-                updateKeyChange('left', false);
-            } else {
-                updateKeyChange('left', false);
-                updateKeyChange('right', false);
-            }
-        }
-    });
+        });
 
         listen("touchmove", function (e) {
             e = reduceTapEvent(e);
@@ -1492,10 +1492,10 @@ _Input = function _Input(scene) {
         });
     };
 
-    listen("mousedown", mouseDownEvent);
-    listen("mouseup", mouseUpEvent);
-    listen("click", clickEvent);
-    listen("mousemove", mouseMoveEvent);
+    //listen("mousedown", mouseDownEvent);
+    //listen("mouseup", mouseUpEvent);
+    //listen("click", clickEvent);
+    //listen("mousemove", mouseMoveEvent);
 
     listen("keydown", function (e) {
         that.keydown = true;
@@ -1509,14 +1509,14 @@ _Input = function _Input(scene) {
 
     // can be used to avoid key jamming
     listen("keypress", function (e) {});
-    if (!sjs.debug)
-        listen("contextmenu", function (e) {_preventEvent(e);});
+    //if (!sjs.debug)
+    //    listen("contextmenu", function (e) {_preventEvent(e);});
 };
 
 
 // Add an automatic pause to all the scenes when the user
 // quit the current window.
-_addEventListener(global, "blur", function (e) {
+/*_addEventListener(global, "blur", function (e) {
     for (var i = 0; i < sjs.scenes.length; i++) {
         var scene = sjs.scenes[i];
         if (!scene.autoPause)
@@ -1546,7 +1546,7 @@ _addEventListener(global, "blur", function (e) {
         }
         anon(scene);
     }
-}, false);
+}, false);*/
 
 Layer = function Layer(scene, name, options) {
 
