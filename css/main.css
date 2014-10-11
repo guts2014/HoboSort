@@ -22,6 +22,16 @@ header img{
 	font-weight: bold;
 }
 
+#percentage{
+	font-size: 24px;
+	font-weight: bold;
+}
+
+#reputation{
+	font-size: 20px;
+	font-weight: bold;
+}
+
 .icon{
 	position: relative;
 	padding-bottom: 20px
@@ -49,6 +59,7 @@ header img{
 	margin-top: 20px;
 	padding-left: 20px;
 }
+
 
 .employee-container .employee-count{
 	background: #fff;
