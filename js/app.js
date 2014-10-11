@@ -14,7 +14,7 @@ hoboApp.controller('gameController', function($scope){
 			description: 'The Facebook addict.',
 			price: 100000,
 			count: 50,
-			src: "img/employee2.png"
+			src: "img/employee3.png"
 		}
 	];
 });
