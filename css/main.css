@@ -18,6 +18,16 @@ header img{
 	font-weight: bold;
 }
 
+#percentage{
+	font-size: 24px;
+	font-weight: bold;
+}
+
+#reputation{
+	font-size: 20px;
+	font-weight: bold;
+}
+
 .icon{
 	position: relative;
 	padding-bottom: 20px

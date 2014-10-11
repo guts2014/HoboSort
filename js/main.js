@@ -11,13 +11,12 @@ function Customer(level, employees)
 function addCustomers()
 {
     //console.log("Adding customer");
-    var averageEmployee = game
+    var averageEmployee = (game.employees[0].count + game.employees[1].count + game.employees[2].count + game.employees[3].count)/4 + 1; //Crappy average calculation
     var customer = new Customer(game.player.level,1);
     customer.sprite  = game.scene.Sprite(customerImage(customer.randT, customer.randM), game.layer);
     var imageWidth = 64;
     var bufferOffset = 15;
     var gap = game.size.width/8;
-    console.log(gap);
     var positions = [gap-(imageWidth/2) - bufferOffset, gap*3-(imageWidth/2) - bufferOffset, gap*5-(imageWidth/2) - bufferOffset, gap*7-(imageWidth/2) - bufferOffset]; //gap,(imageWidth + 3 * gap),(imageWidth * 2 + 5 * gap),(imageWidth * 3 + 7 * gap)
     customer.sprite.move(positions[customer.randT], -60); //Math.random() * game.size.width - 32
     customer.sprite.size(64, 64);
@@ -49,6 +48,7 @@ $(document).ready(function ()
     game.tickCounter = 0;
     game.ticker = game.scene.Ticker(draw);
     game.satisfaction = 50;
+    propagateSatisfaction();
 
     game.ticker.run();
     
@@ -58,6 +58,11 @@ $(document).ready(function ()
 function paintKeys()
 {
 
+
+}
+
+function loseGame()
+{
 
 }
 
@@ -78,12 +83,16 @@ function draw()
         //console.log(game.customers.list.length);
         customer.applyVelocity();
         customer.update();
-        
+
         if(customer.y > (game.size.height))
         {
             game.customers.remove(customer);
             customer.remove();
             game.satisfaction -= 1;
+            propagateSatisfaction();
+
+            if(game.satisfaction < 0.5)
+                loseGame();
         }
         
             
@@ -94,6 +103,11 @@ function draw()
         {
             addCustomers();
         }
+}
+
+function propagateSatisfaction()
+{
+    game.ngScope.$apply(function(){game.ngScope.satisfaction = game.satisfaction;});
 }
 
 /*
