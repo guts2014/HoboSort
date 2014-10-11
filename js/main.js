@@ -74,7 +74,6 @@ $(document).ready(function ()
     initBuckets();
     initButton();
 
-    game.ticker.run();
 });
 
 function initButton()

@@ -50,6 +50,10 @@ header img{
 	font-weight: bold;
 }
 
+#dialogue-box{
+	margin-top: 110px;
+}
+
 .icon{
 	position: relative;
 	padding-bottom: 20px
@@ -78,6 +82,11 @@ header img{
 	padding-left: 20px;
 }
 
+.employee-container .btn{
+	background: #003366;
+	color: #fff;
+}
+
 
 .employee-container .employee-count{
 	background: #fff;
@@ -97,7 +106,8 @@ header img{
 
 .employee-container .employee-price{
 	position: absolute;
-	right: 5px;
+	right: 25px;
+	left: 200px;
 	bottom: 0px;
 	font-size: 16px;
 }

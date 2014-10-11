@@ -77,5 +77,9 @@ hoboApp.controller('gameController', function($scope){
 
 		return "is-green";
 	}
+	$scope.startGame=function(){
+		$("#dialogue-box").fadeOut();
+		game.ticker.run();
+	}
 
 });
