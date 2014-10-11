@@ -73,7 +73,7 @@ function initBuckets(){
 
     for(var i = 0; i < 4; i++){
         var bucket = new Bucket(game.employees[i]);    
-        bucket.sprite  = game.scene.Sprite("img/bucket.png",game.layer);
+        bucket.sprite  = game.scene.Sprite("img/service.png",game.layer);
         var type = game.employees[i].type;
         bucket.sprite.move(game.positions[type], 50 + (127*i));
         bucket.sprite.size(imageWidth, imageWidth);
