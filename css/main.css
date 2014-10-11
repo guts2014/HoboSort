@@ -27,9 +27,31 @@ header img{
 	font-weight: bold;
 }
 
+#percentage.is-orange
+{
+	color:#FF6600;
+}
+
+#percentage.is-light-orange
+{
+	color:#FF9900;
+}
+#percentage.is-red
+{
+	color:red;
+}
+#percentage.is-green
+{
+	color:green;
+}
+
 #reputation{
 	font-size: 20px;
 	font-weight: bold;
+}
+
+#dialogue-box{
+	margin-top: 110px;
 }
 
 .icon{
@@ -60,6 +82,11 @@ header img{
 	padding-left: 20px;
 }
 
+.employee-container .btn{
+	background: #003366;
+	color: #fff;
+}
+
 
 .employee-container .employee-count{
 	background: #fff;
@@ -79,7 +106,8 @@ header img{
 
 .employee-container .employee-price{
 	position: absolute;
-	right: 5px;
+	right: 25px;
+	left: 200px;
 	bottom: 0px;
 	font-size: 16px;
 }

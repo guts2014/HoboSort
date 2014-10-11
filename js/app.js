@@ -66,4 +66,20 @@ hoboApp.controller('gameController', function($scope){
 		}
 	};
 
+	$scope.getSatisfcationClass = function()
+	{
+		if($scope.satisfaction <= 25)
+			return "is-red";
+		if($scope.satisfaction <= 50)
+			return "is-orange";
+		if($scope.satisfaction <= 75)
+			return "is-light-orange";
+
+		return "is-green";
+	}
+	$scope.startGame=function(){
+		$("#dialogue-box").fadeOut();
+		game.ticker.run();
+	}
+
 });
