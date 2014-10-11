@@ -1,19 +1,22 @@
 
-game = {types: ["phone","mail","facebook","twit"]};
+game = {types: ["phone","mail","facebook","twit"], values: {}};
 var imageWidth = 64;
 var bufferOffset = 15;
 
-function Customer(level, employees)
+function Customer(level)
 {
 	this.randT = Math.floor(Math.random() * 4); //Any type from 0-3
     this.randM = Math.floor(Math.random() * 3); //Any mood from 0-2
-	this.randVal = Math.floor(Math.random() + 5) * level * employees; //Any cash value from 5-level
+	this.randVal = 100 * level; //Any cash value from 5-level
+    if(this.randM === 1){
+        this.randVal *= 5;
+    }
 }
 
 function addCustomers()
 {
     var averageEmployee = (game.employees[0].count + game.employees[1].count + game.employees[2].count + game.employees[3].count)/4 + 1; //Crappy average calculation
-    var customer = new Customer(game.player.level,1);
+    var customer = new Customer(game.player.level,game.employees.length);
     customer.sprite  = game.scene.Sprite(customerImage(customer.randT, customer.randM), game.layer);
     customer.sprite.move(game.positions[customer.randT], -imageWidth);
     customer.sprite.size(imageWidth, imageWidth);
@@ -21,6 +24,8 @@ function addCustomers()
     var speedBonus = [1,1.5,1.5]
     customer.sprite.yv = 3 * game.player.level * speedBonus[customer.randM];
     customer.sprite.update();
+
+    game.values[customer.sprite.id] = customer.randVal;
 
     game.customerSprites.add(customer.sprite);
     //game.customers.push(customer);
@@ -104,6 +109,7 @@ function draw()
         {
             game.customerSprites.remove(customer);
             customer.remove();
+            delete game.values[customer.id];
             game.satisfaction -= 1;
             propagateSatisfaction();
 
@@ -126,9 +132,15 @@ function draw()
                 if(bucket.sprite.y - customer.y <= 32 && bucket.sprite.y - customer.y > -64 && Math.abs(bucket.sprite.x - customer.x) < 1){
                     bucket.disappear();
                     bucket.sprite.update();
+
+                    game.satisfaction++;
+                    game.player.addCash(game.values[customer.id]);
+                    propagateSatisfaction();
+                    propagateCash();
                     
                     game.customerSprites.remove(customer);
-                    customer.remove();           
+                    customer.remove();         
+                    delete game.values[customer.id];
                 }
             }
         }else{
@@ -140,56 +152,10 @@ function draw()
     }
 }
 
-function propagateSatisfaction()
-{
+function propagateSatisfaction() {
     game.ngScope.$apply(function(){game.ngScope.satisfaction = game.satisfaction;});
 }
 
-/*
-function paintCustomer(targetY, Customer)
-{
-    var canvas = document.getElementById("canvas");
-    canvas.addEventListener("keydown",doKeyDown,true);
-    input.keyPressed("A");
-
+function propagateCash() {
+    game.ngScope.$apply(function(){game.ngScope.player.cash = game.player.cash;});
 }
-*/
-
-
-/*
-var ctx = document.getElementById("canvas").getContext("2d"),
-    x = 10,
-    y = 0,
-    targetY = 300,
-    velX = 0,
-    velY = 10,
-    thrust = 5;
-
-
-function draw(){   
-    var 
-        ty = targetY - y,
-
-    velY = (ty/dist)*thrust;
-
-    // stop the box if its too close so it doesn't just rotate and bounce
-
-    ctx.fillStyle = "#fff";
-    ctx.clearRect(0,0,400,400);
-    ctx.beginPath();
-    ctx.rect(x, y, 10, 10);
-    ctx.closePath();
-    ctx.fill();
-
-    ctx.fillStyle = "#ff0";
-    ctx.beginPath();
-    ctx.rect(targetX, targetY, 10, 10);
-    ctx.closePath();
-    ctx.fill();
-
-    setTimeout(function(){draw()}, 30);   
-}
-
-draw();
-
-*/
