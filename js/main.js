@@ -15,7 +15,12 @@ function addCustomers(level, employees)
     var customer = new Customer(1,1);
     //var types = ["email","facebook","twitter","phone"];
     customer.sprite  = game.scene.Sprite(customerImage(customer.randT, customer.randM), game.layer);
-    customer.sprite.move(Math.random() * game.size.width - 32, -60); //Math.random() * game.size.height - 150
+    var imageWidth = 64;
+    var bufferOffset = 15;
+    var gap = game.size.width/8;
+    console.log(gap);
+    var positions = [gap-(imageWidth/2) - bufferOffset, gap*3-(imageWidth/2) - bufferOffset, gap*5-(imageWidth/2) - bufferOffset, gap*7-(imageWidth/2) - bufferOffset]; //gap,(imageWidth + 3 * gap),(imageWidth * 2 + 5 * gap),(imageWidth * 3 + 7 * gap)
+    customer.sprite.move(positions[customer.randT], -60); //Math.random() * game.size.width - 32
     customer.sprite.size(64, 64);
     customer.sprite.scale(1);
     customer.sprite.yv = 5;
