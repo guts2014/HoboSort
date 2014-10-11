@@ -18,9 +18,32 @@ header img{
 	font-weight: bold;
 }
 
+.icon-container{
+	position: relative;
+	padding-bottom: 20px;
+}
+
+.icon-container .icon-notification{
+	background: #fff;
+	border: 2px solid #fff;
+	width: 30px;
+	height: 30px;
+	position: absolute;
+	top: 2px;
+	left: 108px;
+	border-radius: 25px;
+	line-height: 28px;
+	text-align: center;
+	font-size: 15px;
+	font-weight: bold;
+	background: red;
+
+}
+
 .employee-container {
 	position: relative;
 	margin-top: 20px;
+	padding-left: 20px;
 }
 
 .employee-container .employee-count{
@@ -30,7 +53,7 @@ header img{
 	height: 50px;
 	position: absolute;
 	top: -2px;
-	left: 15px;
+	left: 27px;
 	border-radius: 25px;
 	line-height: 50px;
 	text-align: center;

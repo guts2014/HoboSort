@@ -3,7 +3,7 @@ var hoboApp = angular.module('hoboApp', []);
 hoboApp.controller('gameController', function($scope){
 	$scope.employees=[
 		{
-			name:'Napoleon Bonerfarte', 
+			name:'Napoleon Bonerfart', 
 			description: 'Good at breaking bones. And phones.',
 			price: 100000,
 			count: 100,
