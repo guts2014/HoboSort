@@ -2,6 +2,7 @@
 game = {types: ["phone","mail","facebook","twit"], values: {}};
 var imageWidth = 64;
 var bufferOffset = 15;
+sprites = {};
 
 function Customer(level)
 {
@@ -78,13 +79,12 @@ $(document).ready(function ()
 
 function paintKeys()
 {
-
-
+    var buttonPo
 }
 
 function loseGame()
 {
-
+    document.getElementById('nooo').play();
 }
 
 function draw()
@@ -119,9 +119,8 @@ function draw()
     }
 
     game.tickCounter++;
-    if (game.tickCounter % 50 == 0) {
+    if (game.tickCounter % 50 == 0) 
         addCustomers();
-    }
 
     for(var i in game.buckets){
         var bucket = game.buckets[i];
