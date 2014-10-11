@@ -6,7 +6,7 @@ hoboApp.controller('gameController', function($scope){
 		new Employee(
 			'Napoleon Bonerfarte',
 			'Good at breaking bones. And phones.',
-			"email",
+			"phone",
 			1000,
 			0,
 			"img/employee1.png"
@@ -14,7 +14,7 @@ hoboApp.controller('gameController', function($scope){
 		new Employee(
 			'Durria Bananachin', 
 			'The Facebook addict.',
-			"email",
+			"mail",
 			1000,
 			0,
 			"img/employee3.png"
@@ -22,7 +22,7 @@ hoboApp.controller('gameController', function($scope){
 		new Employee(
 			'Kazimir Waffles', 
 			'Bird brain.',
-			"email",
+			"facebook",
 			1000,
 			0,
 			"img/employee2.png"
@@ -30,7 +30,7 @@ hoboApp.controller('gameController', function($scope){
 		new Employee(
 			'Nigel Nybbles', 
 			'Good old-fashioned postage.',
-			"email",
+			"twit",
 			1000,
 			0,
 			"img/employee4.png"
@@ -57,9 +57,11 @@ hoboApp.controller('gameController', function($scope){
 	];
 
 	$scope.buyEmployee = function(employee) {
-		$scope.player.addCash(-employee.price);
-		employee.addCount();
-		employee.increasePrice();
+		if ($scope.player.canAfford(employee)) {
+			$scope.player.addCash(-employee.price);
+			employee.addCount();
+			employee.increasePrice();
+		}
 	};
 
 });

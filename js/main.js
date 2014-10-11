@@ -40,7 +40,7 @@ function customerImage(cType, cMood)
 $(document).ready(function () 
 {
     $container = $("#canvas-container")
-    game.size = {width: $container.innerWidth(), height: $container.innerWidth()*3/4};
+    game.size = {width: $container.innerWidth(), height: $container.innerWidth()};
     game.scene = sjs.Scene({w: game.size.width, h: game.size.height, parent: $container[0]});
     game.layer = game.scene.Layer("front");
     game.bucketLayer = game.scene.Layer("buckets")
