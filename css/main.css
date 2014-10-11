@@ -19,6 +19,7 @@ header img{
 
 .employee-container {
 	position: relative;
+	margin-top: 20px;
 }
 
 .employee-container .employee-count{
@@ -49,4 +50,5 @@ header img{
 
 .employee-container .employee-icon img{
 	width: 120px;
+	top: 2px;
 }
