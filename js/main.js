@@ -1,4 +1,4 @@
-game = {types: ["phone","mail","facebook","twit"], values: {}, wave: [], customerNumbers: [0,0,0,0]};
+game = {types: ["phone","mail","facebook","twit"], values: {}, wave: [], customerNumbers: [0,0,0,0],running: false};
 
 var imageWidth = 64;
 var bufferOffset = 15;
@@ -98,7 +98,7 @@ $(document).ready(function ()
     game.customerSprites = sjs.List();
     game.tickCounter = 0;
     game.ticker = game.scene.Ticker(draw);
-    game.satisfaction = 10;
+    game.satisfaction = 50;
     game.buttons = sjs.List();
     propagateSatisfaction();
 
@@ -125,10 +125,14 @@ function initButton()
 
 function loseGame()
 {   
+    game.running=false;
     document.getElementById('nooo').play();
     $("#dialogue-box2").fadeIn();
     for (var i = game.customerSprites.list.length - 1; i >= 0; i--) {
         game.customerSprites.list[i].remove();
+    };
+    for (var j = 0; j < game.buckets.length; j++) {
+        game.buckets[j].sprite.remove();
     };
     game.ticker.stop();
 
@@ -177,8 +181,10 @@ function draw()
 
             propagateSatisfaction();
 
-            if(game.satisfaction < 0.5)
+            if(game.satisfaction < 0.5){
+                game.satisfaction = 0;
                 loseGame();
+            }
         }
     }
 
