@@ -1,16 +1,39 @@
 
 game = {};
 
-function generateCustomer(level, employees)
+function Customer(level, employees)
 {
-	var types = ["email","facebook","twitter","phone"];
-	var randT = Math.floor(Math.random() * 3); //Any type from 0-3
-	var randR = Math.floor(Math.random() + 1 ) * level; //Any rage value from 1-level
-	var randVal = Math.floor(Math.random() + 5) * level * employees; //Any cash value from 5-level
-	
-	var Customer = {type:types[randT], rage:randR, value:randVal};
+	this.randT = Math.floor(Math.random() * 3); //Any type from 0-3
+	this.randR = Math.floor(Math.random() + 1 ) * level; //Any rage value from 1-level
+	this.randVal = Math.floor(Math.random() + 5) * level * employees; //Any cash value from 5-level
+}
 
-	return Customer;
+function addCustomers(level, employees)
+{
+    console.log("Adding customer");
+    var customer = new Customer(1,1);
+    //var types = ["email","facebook","twitter","phone"];
+    var customerSprite = game.scene.Sprite(customerImage(customer.randT), game.layer);
+    customerSprite.move(Math.random() * game.size.width - 150, Math.random() * game.size.height - 150);
+    customerSprite.size(300, 300);
+    customerSprite.scale(0.25);
+    customerSprite.yv = 50;
+    customerSprite.update();
+
+    game.customers.add(customerSprite);
+}
+
+function customerImage(customertype)
+{
+    var image;
+    switch(customertype)
+    {
+        case 0: image = "img/employee1.png"; break;
+        case 1: image = "img/employee2.png"; break;
+        case 2: image = "img/employee3.png"; break;
+        case 3: image = "img/employee4.png"; break;
+    }
+    return image
 }
 
 $(document).ready(function () 
@@ -20,16 +43,26 @@ $(document).ready(function ()
     game.scene = sjs.Scene({w: game.size.width, h: game.size.height, parent: $container[0]});
     game.layer = game.scene.Layer("front");
     game.input = game.scene.Input();
+    game.customers = sjs.List();
+    game.tickCounter = 0;
     game.ticker = game.scene.Ticker(draw);
 
     game.ticker.run();
-
+   
+    /*player = game.scene.Sprite("img/twitter.png");
+    player.setX(200);
+    player.setY(200);
+    player.canvasUpdate(game.layer);
+    player.applyYVelocity();*/
+    /*
     var enemy = game.scene.Sprite('img/employee1.png', game.layer);
     enemy.move(game.size.width / 2 - 150, game.size.height / 2 - 150);
     enemy.size(300, 300);
     enemy.scale(0.25);
     enemy.update();
+    */
 });
+
 
 function draw()
 {
@@ -46,6 +79,19 @@ function draw()
         console.log("D");
     if(game.input.keyPressed("f"))
         console.log("F");
+
+    var  customer;
+    while(customer = game.customers.iterate()) {
+        console.log(customer.yv);
+        customer.applyVelocity();
+        customer.update();
+    }
+
+    game.tickCounter++;
+    if (game.tickCounter % 10000) 
+        {
+            addCustomers();
+        };
 }
 
 /*
