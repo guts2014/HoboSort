@@ -109,7 +109,7 @@ $(document).ready(function ()
     game.buttons = sjs.List();
     var time = (new Date().getTime());
     game.buttonTimes = [time, time, time, time];
-    game.buttons.states = [0,0,0,0] //OFF
+    game.buttonStates = [1,1,1,1] //OFF
     propagateSatisfaction();
 
     initBuckets();
@@ -150,22 +150,27 @@ function loseGame()
 
 function buttonCheck(character, index)
 {
-    if(game.input.keyboard[character])
+    if(game.input.keyPressed(character) && game.buttonStates[index] == 1)
     {
-        /*if(game.buttons.states[index] == 0)
-        {
-            game.buttons.states[index] == 1;
-            game.buttonTimes[index] = (new Date().getTime());
-        } */
+        //game.buttonTimes[index] = (new Date().getTime());
         game.buttons.list[index].setYOffset(imageWidth);
         game.buttons.list[index].update();
         checkPresence(index);
+
+        game.buttonStates[index] = 0;
+
+        setTimeout(function()
+        {
+            game.buttonStates[index] = 1;
+            game.buttons.list[index].setYOffset(0);
+            game.buttons.list[index].update();
+        },200)
     }
-    else
+    /*else
     {
         game.buttons.list[index].setYOffset(0);
         game.buttons.list[index].update();
-    }
+    }*/
 }
 
 function addSatisfaction(){
@@ -195,13 +200,14 @@ function draw()
             delete game.values[customer.id];
 
             propagateSatisfaction();
-
-            if(game.satisfaction < 0.5){
-                game.satisfaction = 0;
-                propagateSatisfaction();
-                loseGame();
-            }
         }
+    }
+
+    if(game.satisfaction < 0.5)
+    {
+        game.satisfaction = 0;
+        propagateSatisfaction();
+        loseGame();
     }
 
     
@@ -250,6 +256,7 @@ function draw()
 function checkPresence(index)
 {
     var button = game.buttons.list[index];
+    var presence = false;
     while(customer = game.customerSprites.iterate())
     {
         if(button.y - customer.y <= imageWidth * (3/4) && button.y - customer.y > -(imageWidth * (3/4)) && Math.abs(button.x - customer.x) < 1)
@@ -258,11 +265,18 @@ function checkPresence(index)
             game.player.addCash(game.values[customer.id].cash);
             propagateSatisfaction();
             propagateCash();
+            presence = true;
             
             game.customerSprites.remove(customer);
             customer.remove();         
             delete game.values[customer.id];
         }
+    }
+
+    if(!presence)
+    {
+        game.satisfaction--;
+        propagateSatisfaction();
     }
 }
 
