@@ -1,7 +1,8 @@
 var hoboApp = angular.module('hoboApp', []);
 
 hoboApp.controller('gameController', function($scope){
-	
+	$scope.customerNumbers = [0,0,0,0];
+
 	$scope.employees = [
 		new Employee(
 			'Napoleon Bonerfarte',
@@ -37,7 +38,7 @@ hoboApp.controller('gameController', function($scope){
 		)
 	];
 
-	$scope.player = new Player(1,10000);
+	$scope.player = new Player(0,10000);
 	game.player = $scope.player;
 	game.employees = $scope.employees;
 	game.ngScope = $scope;
@@ -80,6 +81,12 @@ hoboApp.controller('gameController', function($scope){
 	$scope.startGame=function(){
 		$("#dialogue-box").fadeOut();
 		game.ticker.run();
+		initWave();
 	}
 
+	$scope.displayWaveTimer = function() {
+		return game.nextWaveAt && (new Date()).getTime() < game.nextWaveAt.getTime();
+	}
+
+	$scope.waveTimer = 0; 
 });

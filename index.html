@@ -22,9 +22,9 @@
                 <div class="row">
                     <div class="col-md-8">
                         <div class="row">
-                            <div class="col-md-3 icon" ng-repeat="icon in icons">
+                            <div class="col-md-3 icon" ng-repeat="(i, icon) in icons">
                                 <img ng-src="{{icon.src}}"/>
-                                <div class="icon-notification">0</div>
+                                <div class="icon-notification">{{customerNumbers[i]}}</div>
                             </div>
                         </div>
                     </div>
@@ -45,6 +45,10 @@
             </header>
             <div class="row">
                 <div class="col-md-8" id="canvas-container">
+                    <div id="wave-timer" ng-show="displayWaveTimer()" class="text-center">
+                        <h2>Time to next wave:</h2>
+                        <div class="timer">{{waveTimer}} s</div>
+                    </div>
                     <div id="dialogue-box" class="text-center">
                         <h2>Welcome to HoboSort.</h2>
                         <p>Due to staff shortages, you're now in charge of dealing with customer enquiries and complaints. All of them. On all communication channels. You're allowed to hire helpers, but ultimately, if a call, email, tweet or comment is left unanswered... it's your reputation that'll suffer! </p>
