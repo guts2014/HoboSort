@@ -1,4 +1,8 @@
 
+types = ["email","facebook","twitter","phone"];
+names = ["Andrea","Nick","Andy","Kaj"];
+prices = [5,5,5,5];
+
 function Employee(name, count, degree, type, price) {
 	this.name = name;
 	this.count = count;
@@ -18,12 +22,10 @@ Employee.prototype.addDegree = function(){this.degree = this.degree + 1;}
 Employee.prototype.increasePriceBy = function(money){this.price = this.price + money;}
 
 function initEmployees(){
-	price = 5;
 	employees = new Array();
-	employees[0] = new Employee("Andrea",0,1,"email",price);
-	employees[1] = new Employee("Nick",0,1,"facebook",price);
-	employees[2] = new Employee("Andy",0,1,"tweeter",price);
-	employees[3] = new Employee("Kaj",0,1,"phone",price);
+	for (i=0; i<4; i++) {
+		employees[i] = new Employee(names[i],0,1,types[i],prices[i]);
+	}
 	return employees;
 }
 
@@ -39,10 +41,10 @@ Bucket.prototype.getType = function(){return type;}
 
 function initBuckets(){
 	buckets = new Array();
-	buckets[0] = new Bucket(false,"email");
-	buckets[1] = new Bucket(false,"facebook");
-	buckets[2] = new Bucket(false,"tweeter");
-	buckets[3] = new Bucket(false,"phone");
+	for (i=0; i<4; i++) {
+		buckets[i] = new Bucket(false, types[i]);
+	}
+	return buckets;
 }
 
 
