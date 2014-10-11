@@ -30,7 +30,7 @@ Bucket.prototype.disappear = function(){
 }
 
 Bucket.prototype.appear = function() {
-
+	this.on = true;
 }
 
 

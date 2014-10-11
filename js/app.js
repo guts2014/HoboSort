@@ -38,4 +38,19 @@ hoboApp.controller('gameController', function($scope){
 	];
 
 	$scope.player = new Player(100,1000000);
+
+	$scope.icons=[
+		{
+			src: "img/phone.png"
+		},
+		{
+			src: "img/mail.png"
+		},
+		{
+			src: "img/facebook.png"
+		},
+		{
+			src: "img/twit.png"
+		}]
+
 });
