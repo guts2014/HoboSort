@@ -26,22 +26,17 @@ $(document).ready(function ()
 
     game.ticker.run();
    
-    player = game.scene.Sprite("img/twitter.png");
+    /*player = game.scene.Sprite("img/twitter.png");
     player.setX(200);
     player.setY(200);
     player.canvasUpdate(game.layer);
-    player.applyYVelocity();
+    player.applyYVelocity();*/
 
-
-
-    //player.set
-    /*
     var enemy = game.scene.Sprite('img/employee1.png', game.layer);
     enemy.move(game.size.width / 2 - 150, game.size.height / 2 - 150);
     enemy.size(300, 300);
     enemy.scale(0.25);
     enemy.update();
-    */
 });
 
 
