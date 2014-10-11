@@ -16,9 +16,16 @@ function Customer(level)
         this.randM = 2;
     };  //Any mood from 0-2
 
-	this.randVal = 100 * level; //Any cash value from 5-level
+	this.cash = 100 * level; //Any cash value from 5-level
     if(this.randM === 1){
-        this.randVal *= 5;
+        this.cash *= 5;
+    }
+    if(this.randT == 0) {
+        this.cash *= 1.5;
+    } else if(this.randT == 1) {
+        this.cash *= 1.2;
+    } else if(this.randT == 3) {
+        this.cash *= 0.8;
     }
 }
 
@@ -34,7 +41,7 @@ function addCustomer()
     customer.sprite.update();
 
     var reputation = customer.randM == 2 ? 3 : 1;
-    game.values[customer.sprite.id] = {cash: customer.randVal, rep: reputation};
+    game.values[customer.sprite.id] = {cash: customer.cash, rep: reputation};
 
     game.wave.push(customer);
     game.customerNumbers[customer.randT]++;
