@@ -9,10 +9,17 @@ function Customer(level, employees)
 	this.randVal = Math.floor(Math.random() + 5) * level * employees; //Any cash value from 5-level
 }
 
-function initCustomers(level, employees)
+function addCustomers(level, employees)
 {
-    game.customers = sjs.List();
-    
+    console.log("Adding customer");
+    var customer = game.scene.Sprite('img/employee1.png', game.layer);
+    customer.move(Math.random() * game.size.width - 150, Math.random() * game.size.height - 150);
+    customer.size(300, 300);
+    customer.scale(0.25);
+    customer.yv = 50;
+    customer.update();
+
+    game.customers.add(customer);
 }
 
 $(document).ready(function () 
@@ -22,6 +29,8 @@ $(document).ready(function ()
     game.scene = sjs.Scene({w: game.size.width, h: game.size.height, parent: $container[0]});
     game.layer = game.scene.Layer("front");
     game.input = game.scene.Input();
+    game.customers = sjs.List();
+    game.tickCounter = 0;
     game.ticker = game.scene.Ticker(draw);
 
     game.ticker.run();
@@ -31,12 +40,13 @@ $(document).ready(function ()
     player.setY(200);
     player.canvasUpdate(game.layer);
     player.applyYVelocity();*/
-
+    /*
     var enemy = game.scene.Sprite('img/employee1.png', game.layer);
     enemy.move(game.size.width / 2 - 150, game.size.height / 2 - 150);
     enemy.size(300, 300);
     enemy.scale(0.25);
     enemy.update();
+    */
 });
 
 
@@ -55,6 +65,19 @@ function draw()
         console.log("D");
     if(game.input.keyPressed("f"))
         console.log("F");
+
+    var  customer;
+    while(customer = game.customers.iterate()) {
+        console.log(customer.yv);
+        customer.applyVelocity();
+        customer.update();
+    }
+
+    game.tickCounter++;
+    if (game.tickCounter % 10000) 
+        {
+            addCustomers();
+        };
 }
 
 /*
