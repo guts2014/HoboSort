@@ -10,14 +10,14 @@ function Customer(level, employees)
 
 function addCustomers(level, employees)
 {
-    console.log("Adding customer");
+    //console.log("Adding customer");
     var customer = new Customer(1,1);
     //var types = ["email","facebook","twitter","phone"];
     var customerSprite = game.scene.Sprite(customerImage(customer.randT), game.layer);
-    customerSprite.move(Math.random() * game.size.width - 150, Math.random() * game.size.height - 150);
+    customerSprite.move(Math.random() * game.size.width - 150, -200); //Math.random() * game.size.height - 150
     customerSprite.size(300, 300);
     customerSprite.scale(0.25);
-    customerSprite.yv = 50;
+    customerSprite.yv = 5;
     customerSprite.update();
 
     game.customers.add(customerSprite);
@@ -81,17 +81,26 @@ function draw()
         console.log("F");
 
     var  customer;
-    while(customer = game.customers.iterate()) {
-        console.log(customer.yv);
+    while(customer = game.customers.iterate()) 
+    {
+        console.log(game.customers.list.length);
         customer.applyVelocity();
         customer.update();
+        
+        if(customer.y > (game.size.height * (5/6)))
+        {
+            game.customers.remove(customer);
+            customer.remove();
+        }
+        
+            
     }
 
     game.tickCounter++;
-    if (game.tickCounter % 10000) 
+    if (game.tickCounter % 5 == 0) 
         {
             addCustomers();
-        };
+        }
 }
 
 /*
