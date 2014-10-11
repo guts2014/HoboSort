@@ -29,7 +29,7 @@ Bucket.prototype.disappear = function(){
 	this.sprite.setOpacity(0);
 	this.visible = false;
 	if(this.employee.count > 0){
-		var interval = -this.employee.count/10 + 10;
+		var interval = 10/this.employee.count + 1;
 		this.appearAt = new Date();
 		this.appearAt.setTime((new Date()).getTime() + (interval*1000));	
 	}

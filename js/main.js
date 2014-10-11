@@ -1,40 +1,71 @@
+game = {types: ["phone","mail","facebook","twit"], values: {}, wave: [], customerNumbers: [0,0,0,0]};
 
-game = {types: ["phone","mail","facebook","twit"], values: {}};
 var imageWidth = 64;
 var bufferOffset = 15;
-
 
 function Customer(level)
 {
 	this.randT = Math.floor(Math.random() * 4); //Any type from 0-3
-    this.randM = Math.floor(Math.random() * 3); //Any mood from 0-2
+
+    randif = Math.floor(Math.random() * 20);
+    if (randif < 14) {
+        this.randM = 0;
+    } else if (randif < 17) {
+        this.randM = 1;
+    } else {
+        this.randM = 2;
+    };  //Any mood from 0-2
+
 	this.randVal = 100 * level; //Any cash value from 5-level
     if(this.randM === 1){
         this.randVal *= 5;
     }
 }
 
-function addCustomers()
+function addCustomer()
 {
     var averageEmployee = (game.employees[0].count + game.employees[1].count + game.employees[2].count + game.employees[3].count)/4 + 1; //Crappy average calculation
     var customer = new Customer(game.player.level,game.employees.length);
     customer.sprite  = game.scene.Sprite(customerImage(customer.randT, customer.randM), game.layer);
     customer.sprite.move(game.positions[customer.randT], -imageWidth);
     customer.sprite.size(imageWidth, imageWidth);
-    var speedBonus = [1,1.5,1.5]
+    var speedBonus = [1,1.4,1.7]
     customer.sprite.yv = 3 * game.player.level * speedBonus[customer.randM];
     customer.sprite.update();
 
-    game.values[customer.sprite.id] = customer.randVal;
+    var reputation = customer.randM == 2 ? 3 : 1;
+    game.values[customer.sprite.id] = {cash: customer.randVal, rep: reputation};
 
+    game.wave.push(customer);
+    game.customerNumbers[customer.randT]++;
+}
+
+function showCustomer() {
+    var customer = game.wave.pop();
+    game.customerNumbers[customer.randT]--;
     game.customerSprites.add(customer.sprite);
-    //game.customers.push(customer);
+    propagateCustomerNumbers();
+    if(game.wave.length == 0){
+        initWave();
+    }
 }
 
 function customerImage(cType, cMood)
 {
     var customerMood = ["n","m","a"];
     return "img/"+game.types[cType]+"-"+customerMood[cMood]+".png";
+}
+
+function initWave() {
+    game.nextWaveAt = new Date();
+    game.nextWaveAt.setTime(game.nextWaveAt.getTime() + 3000);
+
+    var waveNumbers = [15, 30, 75, 150, 300, 750, 1500, 3000];
+    game.player.level++;
+    for(var i = 0; i < waveNumbers[game.player.level-1]; i++){
+        addCustomer();   
+    }
+    setTimeout(function(){propagateCustomerNumbers();},10);
 }
 
 function initBuckets(){
@@ -103,21 +134,37 @@ function loseGame()
 
 }
 
+function buttonCheck(character, index)
+{
+    if(game.input.keyboard[character])
+    {
+        game.buttons.list[index].setYOffset(imageWidth);
+        game.buttons.list[index].update();
+        checkPresence(index);
+    }
+    else
+    {
+        game.buttons.list[index].setYOffset(0);
+        game.buttons.list[index].update();
+    }
+}
+
+function addSatisfaction(){
+    if (game.satisfaction+1 <= 100) {
+        game.satisfaction++;
+    }
+}
+
 function draw()
 {
-    if(game.input.keyPressed("a"))
-        console.log("A");
-    if(game.input.keyPressed("s"))
-        console.log("S");
-    if(game.input.keyPressed("d"))
-        console.log("D");
-    if(game.input.keyPressed("f"))
-        console.log("F");
+    buttonCheck("a",0);
+    buttonCheck("s",1);
+    buttonCheck("d",2);
+    buttonCheck("f",3);
 
     var  customer;
     while(customer = game.customerSprites.iterate()) 
     {
-        //console.log(game.customerSprites.list.length);
         customer.applyVelocity();
         customer.update();
 
@@ -125,8 +172,9 @@ function draw()
         {
             game.customerSprites.remove(customer);
             customer.remove();
+            game.satisfaction -= game.values[customer.id].rep;
             delete game.values[customer.id];
-            game.satisfaction--;
+
             propagateSatisfaction();
 
             if(game.satisfaction < 0.5)
@@ -135,8 +183,13 @@ function draw()
     }
 
     game.tickCounter++;
-    if (game.tickCounter % 50 == 0) 
-        addCustomers();
+    if (game.tickCounter % Math.round(50/game.player.level) == 0 && game.nextWaveAt && (new Date()).getTime() > game.nextWaveAt.getTime()) 
+        showCustomer();
+    if (game.nextWaveAt && (new Date()).getTime() < game.nextWaveAt.getTime()){
+        game.ngScope.$apply(function() {
+            game.ngScope.waveTimer = Math.ceil((game.nextWaveAt.getTime() - new Date().getTime())/1000);
+        });
+    }
 
     for(var i in game.buckets){
         var bucket = game.buckets[i];
@@ -148,9 +201,10 @@ function draw()
                     bucket.disappear();
                     bucket.sprite.update();
 
-                    game.satisfaction++;
-                    game.player.addCash(game.values[customer.id]);
+                    addSatisfaction();
                     propagateSatisfaction();
+                    game.player.addCash(game.values[customer.id].cash);
+                    
                     propagateCash();
                     
                     game.customerSprites.remove(customer);
@@ -166,6 +220,24 @@ function draw()
         }
     }
 }
+function checkPresence(index)
+{
+    var button = game.buttons.list[index];
+    while(customer = game.customerSprites.iterate())
+    {
+        if(button.y - customer.y <= 0 && button.y - customer.y > -64 && Math.abs(button.x - customer.x) < 1)
+        {
+            addSatisfaction();
+            game.player.addCash(game.values[customer.id].cash);
+            propagateSatisfaction();
+            propagateCash();
+            
+            game.customerSprites.remove(customer);
+            customer.remove();         
+            delete game.values[customer.id];
+        }
+    }
+}
 
 function propagateSatisfaction() {
     game.ngScope.$apply(function(){game.ngScope.satisfaction = game.satisfaction;});
@@ -173,4 +245,8 @@ function propagateSatisfaction() {
 
 function propagateCash() {
     game.ngScope.$apply(function(){game.ngScope.player.cash = game.player.cash;});
+}
+
+function propagateCustomerNumbers() {
+    game.ngScope.$apply(function(){game.ngScope.customerNumbers = game.customerNumbers;});
 }
