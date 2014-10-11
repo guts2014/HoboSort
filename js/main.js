@@ -45,7 +45,7 @@ $(document).ready(function ()
     game.ticker = game.scene.Ticker(draw);
 
     game.ticker.run();
-   
+    
     /*player = game.scene.Sprite("img/twitter.png");
     player.setX(200);
     player.setY(200);
