@@ -41,3 +41,4 @@ function Player(level, cash) {
 
 Player.prototype.levelUp = function(){this.level = this.level + 1;}
 Player.prototype.addCash = function(earn){this.cash = this.cash + earn;}
+Player.prototype.canAfford = function(employee){return employee.price <= this.cash;}
