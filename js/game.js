@@ -13,7 +13,7 @@ game = {
     reputation: 50,
     buttonStates: [1,1,1,1],
     buckets: [],
-    waveBreak: 3000
+    waveBreak: 8000
 };
 
 //Generates customers
