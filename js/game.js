@@ -16,6 +16,8 @@ game = {
     waveBreak: 3000
 };
 
+gameDefaults = jQuery.extend(true,{},game);
+
 //Generates customers
 function addCustomer() {
     var customer = new Customer();
@@ -32,6 +34,17 @@ function showCustomer() {
     propagateCustomerNumbers();
     
     if(game.wave.length == 0){ initWave(); }
+}
+
+function initGame(){
+
+    propagateReputation();
+    game.customers = [];
+    game.buckets = [];
+    initBuckets();
+    initButtons();
+
+
 }
 
 function initWave() {
@@ -69,6 +82,8 @@ function initButtons() {
 
 $(document).ready(function () 
 {
+
+
     $container = $("#canvas-container");
 
     game.size = {width: $container.innerWidth(), height: $container.innerWidth()};
@@ -82,11 +97,7 @@ $(document).ready(function ()
     var center = game.imageWidth/2;
     var offset = game.bufferOffset;
     game.positions = [gap-center-offset, gap*3-center-offset, gap*5-center-offset, gap*7-center-offset];
-    
-    propagateReputation();
-
-    initBuckets();
-    initButtons();
+    initGame();
 });
 
 function loseGame() {
@@ -103,6 +114,7 @@ function loseGame() {
         game.buckets[j].sprite.remove();
     };
     game.ticker.pause();
+    game.running = false;
 }
 
 function checkButtons() {
@@ -241,7 +253,9 @@ function checkPresence(index) {
 }
 
 function propagateReputation() {
-    game.ngScope.$apply(function(){game.ngScope.reputation = game.reputation;});
+    setTimeout(function(){
+        game.ngScope.$apply(function(){game.ngScope.reputation = game.reputation;});},10);
+    
 }
 
 function propagateCash() {
