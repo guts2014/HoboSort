@@ -215,7 +215,18 @@ function customerSuccess(customerSprite) {
     addReputation();
     game.player.addCash(game.values[customerSprite.id].reward);
     propagateCash();
-    removeCustomer(customerSprite);
+    game.customerSprites.remove(customerSprite);
+    customerSprite.yv = 0;
+
+    $({foo:100}).animate({foo:0}, {
+        step: function(val) {
+            customerSprite.setOpacity(val/100);
+            customerSprite.update();
+        }
+    })
+
+    setTimeout(function() { customerSprite.remove(); }, 500);
+    delete game.values[customerSprite.id];
 }
 
 function removeCustomer(customerSprite) {
