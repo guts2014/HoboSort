@@ -42,7 +42,7 @@ hoboApp.controller('gameController', function($scope){
 	game.player = $scope.player;
 	game.employees = $scope.employees;
 	game.ngScope = $scope;
-	$scope.satisfaction = 50;
+	$scope.reputation = 50;
 
 	$scope.icons=[
 		{
@@ -69,18 +69,18 @@ hoboApp.controller('gameController', function($scope){
 
 	$scope.getSatisfcationClass = function()
 	{
-		if($scope.satisfaction <= 25)
+		if($scope.reputation <= 25)
 			return "is-red";
-		if($scope.satisfaction <= 50)
+		if($scope.reputation <= 50)
 			return "is-orange";
-		if($scope.satisfaction <= 75)
+		if($scope.reputation <= 75)
 			return "is-light-orange";
 
 		return "is-green";
 	}
 	$scope.startGame=function(){
 		$("#dialogue-box").fadeOut();
-		game.running=true;
+		game.running = true;
 		game.ticker.run();
 		initWave();
 	}
