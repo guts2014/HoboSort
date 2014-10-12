@@ -5,7 +5,7 @@ hoboApp.controller('gameController', function($scope){
 
 	$scope.employees = [
 		new Employee(
-			'Napoleon Bonerfarte',
+			'Alvar Acorn',
 			'Good at breaking bones. And phones.',
 			0,
 			1000*1.5,
@@ -13,7 +13,7 @@ hoboApp.controller('gameController', function($scope){
 			"img/employee1.png"
 		),
 		new Employee(
-			'Durria Bananachin', 
+			'Marjory Marbles', 
 			'The Facebook addict.',
 			2,
 			1000,
@@ -21,7 +21,7 @@ hoboApp.controller('gameController', function($scope){
 			"img/employee3.png"
 		),
 		new Employee(
-			'Kazimir Waffles', 
+			'Boris Buffalo', 
 			'Bird brain.',
 			3,
 			1000*0.8,
