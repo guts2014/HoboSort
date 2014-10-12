@@ -89,12 +89,12 @@ function Customer()
 
 		setReward: function() {
 			this.reward = 100 * game.player.level;
-			if(this.randM === 1){ this.cash *= 5; }
+			if(this.mood === 1){ this.reward *= 5; }
 
-			switch(this.randT){
-		        case 0: this.cash *= 1.5;
-		        case 1: this.cash *= 1.2;
-		        case 3: this.cash *= 0.8;
+			switch(this.type){
+		        case 0: this.reward *= 1.5;
+		        case 1: this.reward *= 1.2;
+		        case 3: this.reward *= 0.8;
 		    }
 		},
 

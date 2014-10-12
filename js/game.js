@@ -90,7 +90,8 @@ $(document).ready(function ()
 });
 
 function loseGame() {
-    game.running=false;
+    console.log('The game has been LOST.');
+    game.running = false;
 
     $('#nooo')[0].play();
     $("#game-over-box").fadeIn();
@@ -179,6 +180,7 @@ function checkLostCustomers() {
     var  customerSprite;
     while(customerSprite = game.customerSprites.iterate())
     {
+        if(!customerSprite.layer) { return;W }
         customerSprite.applyVelocity();
         customerSprite.update();
 
