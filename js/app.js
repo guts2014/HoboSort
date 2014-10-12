@@ -85,21 +85,6 @@ hoboApp.controller('gameController', function($scope){
 		initWave();
 	}
 
-	$scope.replayGame=function(){
-		$("#game-over-box").fadeOut();
-		initVar();
-
-		$scope.player = new Player(0,10000);
-		game.player = $scope.player;
-		game.employees = $scope.employees;
-		game.ngScope = $scope;
-		$scope.reputation = 50;
-		initGame();
-		game.running = true;
-		game.ticker.run();
-		initWave();
-	}
-
 	$scope.displayWaveTimer = function() {
 		return game.nextWaveAt && (new Date()).getTime() < game.nextWaveAt.getTime() && game.running;
 	}

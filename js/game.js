@@ -16,8 +16,6 @@ game = {
     waveBreak: 3000
 };
 
-gameDefaults = jQuery.extend(true,{},game);
-
 //Generates customers
 function addCustomer() {
     var customer = new Customer();
@@ -34,35 +32,6 @@ function showCustomer() {
     propagateCustomerNumbers();
     
     if(game.wave.length == 0){ initWave(); }
-}
-
-function initVar(){
-        game = {
-        types: ["phone","mail","facebook","twit"], 
-        values: {}, 
-        wave: [], 
-        customerNumbers: [0,0,0,0],
-        running: false, 
-        imageWidth: 64, 
-        bufferOffset: 15, 
-        customers: [],
-        customerSprites: sjs.List(),
-        buttonSprites: sjs.List(),
-        tickCounter: 0,
-        reputation: 50,
-        buttonStates: [1,1,1,1],
-        buckets: [],
-        waveBreak: 3000
-    };
-}
-
-function initGame(){
-
-    propagateReputation();
-    initBuckets();
-    initButtons();
-
-
 }
 
 function initWave() {
@@ -100,8 +69,6 @@ function initButtons() {
 
 $(document).ready(function () 
 {
-
-
     $container = $("#canvas-container");
 
     game.size = {width: $container.innerWidth(), height: $container.innerWidth()};
@@ -115,7 +82,11 @@ $(document).ready(function ()
     var center = game.imageWidth/2;
     var offset = game.bufferOffset;
     game.positions = [gap-center-offset, gap*3-center-offset, gap*5-center-offset, gap*7-center-offset];
-    initGame();
+    
+    propagateReputation();
+
+    initBuckets();
+    initButtons();
 });
 
 function loseGame() {
@@ -132,7 +103,6 @@ function loseGame() {
         game.buckets[j].sprite.remove();
     };
     game.ticker.pause();
-    game.running = false;
 }
 
 function checkButtons() {
@@ -271,9 +241,7 @@ function checkPresence(index) {
 }
 
 function propagateReputation() {
-    setTimeout(function(){
-        game.ngScope.$apply(function(){game.ngScope.reputation = game.reputation;});},10);
-    
+    game.ngScope.$apply(function(){game.ngScope.reputation = game.reputation;});
 }
 
 function propagateCash() {
