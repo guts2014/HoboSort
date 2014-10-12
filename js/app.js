@@ -65,6 +65,8 @@ hoboApp.controller('gameController', function($scope){
 			employee.addCount();
 			employee.increasePrice();
 		}
+		$('#button')[0].play();
+		$('#button')[0].fastSeek();
 	};
 
 	$scope.getSatisfcationClass = function()
@@ -79,10 +81,13 @@ hoboApp.controller('gameController', function($scope){
 		return "is-green";
 	}
 	$scope.startGame=function(){
+
 		$("#dialogue-box").fadeOut();
 		game.running = true;
 		game.ticker.run();
 		initWave();
+		$('#button')[0].play();
+		$('#button')[0].fastSeek();
 	}
 
 	$scope.displayWaveTimer = function() {
