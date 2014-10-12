@@ -95,6 +95,7 @@ function loseGame() {
     propagateGameRunning();
 
     $('#nooo')[0].play();
+    $('#theme')[0].pause();
     $("#game-over-box").fadeIn();
     var customer;
     while(customer = game.customerSprites.iterate()){

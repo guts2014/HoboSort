@@ -88,6 +88,7 @@ hoboApp.controller('gameController', function($scope){
 		game.ticker.run();
 		initWave();
 		$('#button')[0].play();
+		$('#theme')[0].play();
 		$('#button')[0].fastSeek();
 	}
 
