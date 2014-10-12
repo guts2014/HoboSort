@@ -92,6 +92,7 @@ $(document).ready(function ()
 function loseGame() {
     console.log('The game has been LOST.');
     game.running = false;
+    propagateGameRunning();
 
     $('#nooo')[0].play();
     $("#game-over-box").fadeIn();
@@ -261,4 +262,8 @@ function propagateCash() {
 
 function propagateCustomerNumbers() {
     game.ngScope.$apply(function(){game.ngScope.customerNumbers = game.customerNumbers;});
+}
+
+function propagateGameRunning() {
+    game.ngScope.$apply(function(){game.ngScope.gameRunning = game.running;});
 }
