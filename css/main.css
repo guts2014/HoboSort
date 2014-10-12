@@ -143,7 +143,7 @@ header {
 	z-index: 5; /* Ensures button is on the topmost layer in order for it to be clicked. */
 }
 
-#dialogue-box2{
+#game-over-box{
 	position: absolute;
 	display: none;
 	margin-top: 200px;
