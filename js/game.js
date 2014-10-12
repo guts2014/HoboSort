@@ -36,11 +36,29 @@ function showCustomer() {
     if(game.wave.length == 0){ initWave(); }
 }
 
+function initVar(){
+        game = {
+        types: ["phone","mail","facebook","twit"], 
+        values: {}, 
+        wave: [], 
+        customerNumbers: [0,0,0,0],
+        running: false, 
+        imageWidth: 64, 
+        bufferOffset: 15, 
+        customers: [],
+        customerSprites: sjs.List(),
+        buttonSprites: sjs.List(),
+        tickCounter: 0,
+        reputation: 50,
+        buttonStates: [1,1,1,1],
+        buckets: [],
+        waveBreak: 3000
+    };
+}
+
 function initGame(){
 
     propagateReputation();
-    game.customers = [];
-    game.buckets = [];
     initBuckets();
     initButtons();
 

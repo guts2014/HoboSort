@@ -87,7 +87,7 @@ hoboApp.controller('gameController', function($scope){
 
 	$scope.replayGame=function(){
 		$("#game-over-box").fadeOut();
-		game = jQuery.extend(true,game,gameDefaults); 
+		initVar();
 
 		$scope.player = new Player(0,10000);
 		game.player = $scope.player;
