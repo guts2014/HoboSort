@@ -112,6 +112,11 @@ function checkButtons() {
     buttonCheck("s",1);
     buttonCheck("d",2);
     buttonCheck("f",3);
+    hotkeyCheck("1");
+    hotkeyCheck("2");
+    hotkeyCheck("3");
+    hotkeyCheck("4");
+
 }
 
 function buttonCheck(character, index) {
@@ -122,6 +127,12 @@ function buttonCheck(character, index) {
         setTimeout(function() {
             unpressButton(index);
         },200)
+    }
+}
+
+function hotkeyCheck(character){
+    if(game.input.keyPressed(character)){
+        game.ngScope.buyEmployee(game.employees[character-1]);
     }
 }
 
@@ -271,3 +282,7 @@ function propagateCustomerNumbers() {
 function propagateGameRunning() {
     game.ngScope.$apply(function(){game.ngScope.gameRunning = game.running;});
 }
+
+// function propagateEmployees() {
+//     game.ngScope.$apply(function(){game.ngScope.gameRunning = game.running;});
+// }
